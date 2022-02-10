@@ -67,8 +67,8 @@ static const Layout layouts[] = {
 	{ MODKEY|ShiftMask,             KEY,      tag,            {.ui = 1 << TAG} }, \
 	{ MODKEY|ControlMask|ShiftMask, KEY,      toggletag,      {.ui = 1 << TAG} },
 #define STACKKEYS(MOD,ACTION) \
-	{ MOD, XK_j,     ACTION##stack, {.i = INC(+1) } }, \
-	{ MOD, XK_k,     ACTION##stack, {.i = INC(-1) } }, \
+	{ MOD, XK_n,     ACTION##stack, {.i = INC(+1) } }, \
+	{ MOD, XK_e,     ACTION##stack, {.i = INC(-1) } }, \
 	{ MOD, XK_grave, ACTION##stack, {.i = PREVSEL } }, \
 	{ MOD, XK_q,     ACTION##stack, {.i = 0 } }, \
 	{ MOD, XK_a,     ACTION##stack, {.i = 1 } }, \
@@ -89,28 +89,28 @@ static const char *termcmd[]  = { "kitty", NULL };
 static Key keys[] = {
 	/* modifier                     key        function        argument */
 	{ MODKEY,                       XK_o, shiftviewclients,    { .i = +1 } },
-	{ MODKEY|ShiftMask,             XK_o,	shiftview,         { .i = +1 } },
-	{ MODKEY|ShiftMask,             XK_i,	shiftview,         { .i = -1 } },
-	{ MODKEY,	                XK_i, shiftviewclients,    { .i = -1 } },
-	{ MODKEY,                       XK_p,      spawn,          {.v = dmenucmd } },
-	{ MODKEY|ShiftMask,             XK_Return, spawn,          {.v = termcmd } },
+	{ MODKEY|ShiftMask,             XK_u,	shiftview,         { .i = +1 } },
+	{ MODKEY|ShiftMask,             XK_l,	shiftview,         { .i = -1 } },
+	{ MODKEY,	                XK_j, shiftviewclients,    { .i = -1 } },
+	{ MODKEY,                       XK_d,      spawn,          {.v = dmenucmd } },
+	{ MODKEY,	      		XK_Return, spawn,          {.v = termcmd } },
 	{ MODKEY,                       XK_b,      togglebar,      {0} },
 	STACKKEYS(MODKEY,                          focus)
 	STACKKEYS(MODKEY|ShiftMask,                push)
-	{ MODKEY,                       XK_i,      incnmaster,     {.i = +1 } },
-	{ MODKEY,                       XK_d,      incnmaster,     {.i = -1 } },
-	{ MODKEY,                       XK_h,      setmfact,       {.f = -0.05} },
+	{ MODKEY,                       XK_u,      incnmaster,     {.i = +1 } },
+	{ MODKEY,                       XK_l,      incnmaster,     {.i = -1 } },
+	{ MODKEY|ALTKEY,                XK_n,      setmfact,       {.f = -0.05} },
 	{ MODKEY|ShiftMask,		XK_h,      shiftboth,      { .i = -1 }	},
 	{ MODKEY|ControlMask,		XK_h,      shiftswaptags,  { .i = -1 }	},
-	{ MODKEY|ControlMask,		XK_l,      shiftswaptags,  { .i = +1 }	},
-	{ MODKEY|ShiftMask,             XK_l,      shiftboth,      { .i = +1 }	},
-	{ MODKEY,                       XK_l,      setmfact,       {.f = +0.05} },
+	{ MODKEY|ControlMask,		XK_i,      shiftswaptags,  { .i = +1 }	},
+	{ MODKEY|ShiftMask,             XK_i,      shiftboth,      { .i = +1 }	},
+	{ MODKEY|ALTKEY,                XK_e,      setmfact,       {.f = +0.05} },
 	{ MODKEY|ALTKEY,                XK_h,      incrgaps,       {.i = +1 } },
-	{ MODKEY|ALTKEY,                XK_l,      incrgaps,       {.i = -1 } },
+	{ MODKEY|ALTKEY,                XK_i,      incrgaps,       {.i = -1 } },
 	{ MODKEY|ALTKEY|ShiftMask,      XK_h,      incrogaps,      {.i = +1 } },
-	{ MODKEY|ALTKEY|ShiftMask,      XK_l,      incrogaps,      {.i = -1 } },
+	{ MODKEY|ALTKEY|ShiftMask,      XK_i,      incrogaps,      {.i = -1 } },
 	{ MODKEY|ALTKEY|ControlMask,    XK_h,      incrigaps,      {.i = +1 } },
-	{ MODKEY|ALTKEY|ControlMask,    XK_l,      incrigaps,      {.i = -1 } },
+	{ MODKEY|ALTKEY|ControlMask,    XK_i,      incrigaps,      {.i = -1 } },
 	{ MODKEY|ALTKEY,                XK_0,      togglegaps,     {0} },
 	{ MODKEY|ALTKEY|ShiftMask,      XK_0,      defaultgaps,    {0} },
 	{ MODKEY,                       XK_y,      incrihgaps,     {.i = +1 } },
@@ -121,13 +121,13 @@ static Key keys[] = {
 	{ MODKEY|ALTKEY,                XK_o,      incrohgaps,     {.i = -1 } },
 	{ MODKEY|ShiftMask,             XK_y,      incrovgaps,     {.i = +1 } },
 	{ MODKEY|ShiftMask,             XK_o,      incrovgaps,     {.i = -1 } },
-	{ MODKEY,                       XK_Return, zoom,           {0} },
+	{ MODKEY|ShiftMask,             XK_Return, zoom,           {0} },
 	{ MODKEY,                       XK_Tab,    view,           {0} },
 	{ MODKEY|ShiftMask,             XK_c,      killclient,     {0} },
 	{ MODKEY,                       XK_t,      setlayout,      {.v = &layouts[0]} },
 	{ MODKEY,                       XK_f,      setlayout,      {.v = &layouts[1]} },
 	{ MODKEY,                       XK_m,      setlayout,      {.v = &layouts[2]} },
-	{ MODKEY|ALTKEY|ShiftMask,      XK_f,      fullscreen,     {0} },
+	{ MODKEY|ALTKEY,		XK_f,      fullscreen,     {0} },
 	{ MODKEY,                       XK_space,  setlayout,      {0} },
 	{ MODKEY|ShiftMask,             XK_space,  togglefloating, {0} },
 	{ MODKEY|ShiftMask,             XK_f,      togglefullscr,  {0} },
