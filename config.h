@@ -16,7 +16,7 @@ static const unsigned int gappov    = 10;       /* vert outer gap between window
 static const int smartgaps          = 0;        /* 1 means no outer gap when there is only one window */
 static const int showbar            = 1;        /* 0 means no bar */
 static const int topbar             = 1;        /* 0 means bottom bar */
-static const char *fonts[]          = { "IBMPlexMono-Regular:size=10" };
+static const char *fonts[]          = { "IBMPlexMono-Regular:size=10", "JoyPixels:pixelsize=10:antialias=true:autohint=true" };
 static const char dmenufont[]       = "IBMPlexMono-Regular:size=10";
 static const char col_gray1[]       = "#222222";
 static const char col_gray2[]       = "#444444";
@@ -84,6 +84,8 @@ static const Layout layouts[] = {
 static char dmenumon[2] = "0"; /* component of dmenucmd, manipulated in spawn() */
 static const char *dmenucmd[] = { "dmenu_run", "-m", dmenumon, "-fn", dmenufont, "-nb", col_gray1, "-nf", col_gray3, "-sb", col_cyan, "-sf", col_gray4, NULL };
 static const char *termcmd[]  = { "kitty", NULL };
+
+#include <X11/XF86keysym.h>
 #include "shift-tools.c"
 
 static Key keys[] = {
@@ -137,6 +139,16 @@ static Key keys[] = {
 	{ MODKEY,                       XK_period, focusmon,       {.i = +1 } },
 	{ MODKEY|ShiftMask,             XK_comma,  tagmon,         {.i = -1 } },
 	{ MODKEY|ShiftMask,             XK_period, tagmon,         {.i = +1 } },
+    { 0, XF86XK_AudioMute,		spawn,		SHCMD("pamixer -t; kill -44 $(pidof dwmblocks)") },
+	{ 0, XF86XK_AudioRaiseVolume,	spawn,		SHCMD("pamixer -i 3; kill -44 $(pidof dwmblocks)") },
+	{ 0, XF86XK_AudioLowerVolume,	spawn,		SHCMD("pamixer -d 3; kill -44 $(pidof dwmblocks)") },
+	{ 0, XF86XK_AudioPrev,		spawn,		SHCMD("playerctl previous") },
+	{ 0, XF86XK_AudioNext,		spawn,		SHCMD("playerctl next") },
+	{ 0, XF86XK_AudioPause,		spawn,		SHCMD("playerctl play-pause") },
+	{ 0, XF86XK_AudioPlay,		spawn,		SHCMD("playerctl play-pause") },
+	{ 0, XF86XK_AudioStop,		spawn,		SHCMD("playerctl stop") },
+	{ 0, XF86XK_AudioRewind,	spawn,		SHCMD("position seek -10") },
+	{ 0, XF86XK_AudioForward,	spawn,		SHCMD("position seek +10") },
 	TAGKEYS(                        XK_1,                      0)
 	TAGKEYS(                        XK_2,                      1)
 	TAGKEYS(                        XK_3,                      2)
