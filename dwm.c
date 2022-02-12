@@ -161,6 +161,7 @@ struct Monitor {
 	unsigned int tagset[2];
 	int showbar;
 	int topbar;
+        int statushandcursor;
 	Client *clients;
 	Client *sel;
 	Client *stack;
@@ -287,6 +288,7 @@ static void unmapnotify(XEvent *e);
 static void updatebarpos(Monitor *m);
 static void updatebars(void);
 static void updateclientlist(void);
+static void updatedwmblockssig(int x);
 static int updategeom(void);
 static void updatenumlockmask(void);
 static void updatesizehints(Client *c);
@@ -1417,17 +1419,24 @@ void
 motionnotify(XEvent *e)
 {
 	static Monitor *mon = NULL;
+        int x;
 	Monitor *m;
 	XMotionEvent *ev = &e->xmotion;
 
-	if (ev->window != root)
-		return;
-	if ((m = recttomon(ev->x_root, ev->y_root, 1, 1)) != mon && mon) {
-		unfocus(selmon->sel, 1);
-		selmon = m;
-		focus(NULL);
-	}
-	mon = m;
+        if (ev->window == root) {
+                if ((m = recttomon(ev->x_root, ev->y_root, 1, 1)) != mon && mon) {
+                        unfocus(selmon->sel, 1);
+                        selmon = m;
+                        focus(NULL);
+                }
+                mon = m;
+        } else if (ev->window == selmon->barwin && (x = selmon->ww - RSPAD - ev->x) > 0
+                                                && (x -= wstext - LSPAD - RSPAD) <= 0)
+                updatedwmblockssig(x);
+        else if (selmon->statushandcursor) {
+                selmon->statushandcursor = 0;
+                XDefineCursor(dpy, selmon->barwin, cursor[CurNormal]->cursor);
+        }
 }
 
 void
@@ -2053,6 +2062,7 @@ setup(void)
 	xatom[XembedInfo] = XInternAtom(dpy, "_XEMBED_INFO", False);
 	/* init cursors */
 	cursor[CurNormal] = drw_cur_create(drw, XC_left_ptr);
+        cursor[CurHand] = drw_cur_create(drw, XC_hand2);
 	cursor[CurResize] = drw_cur_create(drw, XC_sizing);
 	cursor[CurMove] = drw_cur_create(drw, XC_fleur);
 	/* init appearance */
@@ -2139,6 +2149,37 @@ sigstatusbar(const Arg *arg)
 		return;
 
 	sigqueue(statuspid, SIGRTMIN+statussig, sv);
+}
+
+void
+sigdwmblocks(const Arg *arg)
+{
+        static int fd = -1;
+        struct flock fl;
+        union sigval sv;
+
+        if (!dwmblockssig)
+                return;
+        fl.l_type = F_WRLCK;
+        fl.l_whence = SEEK_SET;
+        fl.l_start = 0;
+        fl.l_len = 0;
+        if (fd != -1) {
+                if (fcntl(fd, F_GETLK, &fl) != -1 && fl.l_type == F_WRLCK)
+                        goto signal;
+                close(fd);
+                fl.l_type = F_WRLCK;
+        }
+        if ((fd = open(DWMBLOCKSLOCKFILE, O_RDONLY | O_CLOEXEC)) == -1)
+                return;
+        if (fcntl(fd, F_GETLK, &fl) == -1 || fl.l_type != F_WRLCK) {
+                close(fd);
+                fd = -1;
+                return;
+        }
+signal:
+        sv.sival_int = (dwmblockssig << 8) | arg->i;
+        sigqueue(fl.l_pid, SIGRTMIN, sv);
 }
 
 void
@@ -2410,7 +2451,7 @@ updatebars(void)
 	XSetWindowAttributes wa = {
 		.override_redirect = True,
 		.background_pixmap = ParentRelative,
-		.event_mask = ButtonPressMask|ExposureMask
+		.event_mask = ButtonPressMask|ExposureMask|PointerMotionMask
 	};
 	XClassHint ch = {"dwm", "dwm"};
 	for (m = mons; m; m = m->next) {
@@ -2455,6 +2496,41 @@ updateclientlist()
 			XChangeProperty(dpy, root, netatom[NetClientList],
 				XA_WINDOW, 32, PropModeAppend,
 				(unsigned char *) &(c->win), 1);
+}
+
+void
+updatedwmblockssig(int x)
+{
+        char *sts = stexts;
+        char *stp = stexts;
+        char tmp;
+
+        while (*sts != '\0') {
+                if ((unsigned char)*sts >= ' ') {
+                        sts++;
+                        continue;
+                }
+                tmp = *sts;
+                *sts = '\0';
+                x += TTEXTW(stp);
+                *sts = tmp;
+                if (x > 0) {
+                        if (tmp == DELIMITERENDCHAR)
+                                break;
+                        if (!selmon->statushandcursor) {
+                                selmon->statushandcursor = 1;
+                                XDefineCursor(dpy, selmon->barwin, cursor[CurHand]->cursor);
+                        }
+                        dwmblockssig = tmp;
+                        return;
+                }
+                stp = ++sts;
+        }
+        if (selmon->statushandcursor) {
+                selmon->statushandcursor = 0;
+                XDefineCursor(dpy, selmon->barwin, cursor[CurNormal]->cursor);
+        }
+        dwmblockssig = 0;
 }
 
 int
