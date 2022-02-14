@@ -5,7 +5,7 @@ static const unsigned int borderpx  = 4;        /* border pixel of windows */
 static const unsigned int snap      = 32;       /* snap pixel */
 static const unsigned int systraypinning = 2;   /* 0: sloppy systray follows selected monitor, >0: pin systray to monitor X */
 static const unsigned int systrayonleft = 1;   	/* 0: systray in the right corner, >0: systray on left of status text */
-static const unsigned int systrayspacing = 8;   /* systray spacing */
+static const unsigned int systrayspacing = 4;   /* systray spacing */
 static const int systraypinningfailfirst = 1;   /* 1: if pinning fails, display systray on the first monitor, False: display systray on the last monitor*/
 static const int showsystray        = 1;    	/* 0 means no systray */
 static const int swallowfloating    = 0;        /* 1 means swallow floating windows by default */
@@ -147,8 +147,8 @@ static Key keys[] = {
 	{ 0, XF86XK_AudioPause,		spawn,		SHCMD("playerctl play-pause") },
 	{ 0, XF86XK_AudioPlay,		spawn,		SHCMD("playerctl play-pause") },
 	{ 0, XF86XK_AudioStop,		spawn,		SHCMD("playerctl stop") },
-	{ 0, XF86XK_AudioRewind,	spawn,		SHCMD("position seek -10") },
-	{ 0, XF86XK_AudioForward,	spawn,		SHCMD("position seek +10") },
+	{ 0, XF86XK_AudioRewind,	spawn,		SHCMD("playerctl position -10") },
+	{ 0, XF86XK_AudioForward,	spawn,		SHCMD("playerctl position +10") },
 	TAGKEYS(                        XK_1,                      0)
 	TAGKEYS(                        XK_2,                      1)
 	TAGKEYS(                        XK_3,                      2)
@@ -163,14 +163,27 @@ static Key keys[] = {
 
 /* button definitions */
 /* click can be ClkTagBar, ClkLtSymbol, ClkStatusText, ClkWinTitle, ClkClientWin, or ClkRootWin */
+/*
+ * Button1 = Left Click
+ * Button3 = Right Click
+ * Button2 = Middle Click
+ * Button4 = Scroll Up
+ * Button5 = Scroll Down
+ */
+
 static Button buttons[] = {
 	/* click                event mask      button          function        argument */
 	{ ClkLtSymbol,          0,              Button1,        setlayout,      {0} },
 	{ ClkLtSymbol,          0,              Button3,        setlayout,      {.v = &layouts[2]} },
 	{ ClkWinTitle,          0,              Button2,        zoom,           {0} },
+
 	{ ClkStatusText,        0,              Button1,        sigstatusbar,   {.i = 1} },
 	{ ClkStatusText,        0,              Button2,        sigstatusbar,   {.i = 2} },
 	{ ClkStatusText,        0,              Button3,        sigstatusbar,   {.i = 3} },
+	{ ClkStatusText,        0,              Button4,        sigstatusbar,   {.i = 4} },
+        { ClkStatusText,        0,              Button5,        sigstatusbar,   {.i = 5} },
+        { ClkStatusText,        ShiftMask,      Button1,        sigstatusbar,   {.i = 6} },
+
 	{ ClkClientWin,         MODKEY,         Button1,        movemouse,      {0} },
 	{ ClkClientWin,         MODKEY,         Button2,        togglefloating, {0} },
 	{ ClkClientWin,         MODKEY,         Button3,        resizemouse,    {0} },
