@@ -22,7 +22,7 @@ FREETYPEINC = /usr/include/freetype2
 #KVMLIB = -lkvm
 
 # includes and libs
-INCS = -I${X11INC} -I${FREETYPEINC}
+INCS = -I${X11INC} -I${FREETYPEINC} -I /usr/include/freetype2
 LIBS = -L${X11LIB} -lX11 ${XINERAMALIBS} ${FREETYPELIBS} -lX11-xcb -lxcb -lxcb-res ${KVMLIB}
 
 # flags

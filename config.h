@@ -1,12 +1,12 @@
 /* See LICENSE file for copyright and license details. */
 
 /* appearance */
-static const unsigned int borderpx  = 4;        /* border pixel of windows */
+static const unsigned int borderpx  = 2;        /* border pixel of windows */
 static const unsigned int snap      = 32;       /* snap pixel */
 static const unsigned int systraypinning = 2;   /* 0: sloppy systray follows selected monitor, >0: pin systray to monitor X */
 static const unsigned int systrayonleft = 1;   	/* 0: systray in the right corner, >0: systray on left of status text */
 static const unsigned int systrayspacing = 4;   /* systray spacing */
-static const int systraypinningfailfirst = 1;   /* 1: if pinning fails, display systray on the first monitor, False: display systray on the last monitor*/
+static const int systraypinningfailfirst = 0;   /* 1: if pinning fails, display systray on the first monitor, False: display systray on the last monitor*/
 static const int showsystray        = 1;    	/* 0 means no systray */
 static const int swallowfloating    = 0;        /* 1 means swallow floating windows by default */
 static const unsigned int gappih    = 10;       /* horiz inner gap between windows */
@@ -42,6 +42,7 @@ static const Rule rules[] = {
 	{ "Firefox", NULL,     NULL,           1 << 8,    0,          0,          -1,        -1 },
 	{ "St",      NULL,     NULL,           0,         0,          1,           0,        -1 },
 	{ "Kitty",   NULL,     NULL,           0,         0,          1,           0,        -1 },
+	{ "Discord", NULL,     NULL,           1 << 8,    0,          0,          -1,        -1 },
 	{ NULL,      NULL,     "Event Tester", 0,         0,          0,           1,        -1 }, /* xev */
 };
 
@@ -99,13 +100,13 @@ static Key keys[] = {
 	{ MODKEY,                       XK_b,      togglebar,      {0} },
 	STACKKEYS(MODKEY,                          focus)
 	STACKKEYS(MODKEY|ShiftMask,                push)
-	{ MODKEY|ShiftMask,             XK_u,      incnmaster,     {.i = +1 } },
-	{ MODKEY|ShiftMask,             XK_l,      incnmaster,     {.i = -1 } },
+	{ MODKEY|ALTKEY,                XK_u,      incnmaster,     {.i = +1 } },
+	{ MODKEY|ALTKEY,                XK_l,      incnmaster,     {.i = -1 } },
 	{ MODKEY|ALTKEY,                XK_n,      setmfact,       {.f = -0.05} },
-	{ MODKEY|ShiftMask,		XK_m,      shiftboth,      { .i = -1 }	},
-	{ MODKEY|ControlMask,		XK_m,      shiftswaptags,  { .i = -1 }	},
-	{ MODKEY|ControlMask,		XK_i,      shiftswaptags,  { .i = +1 }	},
-	{ MODKEY|ShiftMask,             XK_i,      shiftboth,      { .i = +1 }	},
+	{ MODKEY|ShiftMask,		XK_l,      shiftboth,      { .i = -1 }	},
+	{ MODKEY|ControlMask,           XK_l,      shiftswaptags,  { .i = -1 }	},
+	{ MODKEY|ControlMask,   	XK_u,      shiftswaptags,  { .i = +1 }	},
+	{ MODKEY|ShiftMask,             XK_u,      shiftboth,      { .i = +1 }	},
 	{ MODKEY|ALTKEY,                XK_e,      setmfact,       {.f = +0.05} },
 	{ MODKEY|ALTKEY,                XK_m,      incrgaps,       {.i = +1 } },
 	{ MODKEY|ALTKEY,                XK_i,      incrgaps,       {.i = -1 } },
@@ -113,22 +114,22 @@ static Key keys[] = {
 	{ MODKEY|ALTKEY|ShiftMask,      XK_i,      incrogaps,      {.i = -1 } },
 	{ MODKEY|ALTKEY|ControlMask,    XK_m,      incrigaps,      {.i = +1 } },
 	{ MODKEY|ALTKEY|ControlMask,    XK_i,      incrigaps,      {.i = -1 } },
-	{ MODKEY|ALTKEY,                XK_0,      togglegaps,     {0} },
-	{ MODKEY|ALTKEY|ShiftMask,      XK_0,      defaultgaps,    {0} },
-	{ MODKEY,                       XK_y,      incrihgaps,     {.i = +1 } },
-	{ MODKEY,                       XK_o,      incrihgaps,     {.i = -1 } },
-	{ MODKEY|ControlMask,           XK_y,      incrivgaps,     {.i = +1 } },
-	{ MODKEY|ControlMask,           XK_o,      incrivgaps,     {.i = -1 } },
-	{ MODKEY|ALTKEY,                XK_y,      incrohgaps,     {.i = +1 } },
-	{ MODKEY|ALTKEY,                XK_o,      incrohgaps,     {.i = -1 } },
-	{ MODKEY|ShiftMask,             XK_y,      incrovgaps,     {.i = +1 } },
-	{ MODKEY|ShiftMask,             XK_o,      incrovgaps,     {.i = -1 } },
+	{ MODKEY,                       XK_g,      togglegaps,     {0} },
+	{ MODKEY|ShiftMask,             XK_g,      defaultgaps,    {0} },
+	{ MODKEY|ALTKEY,                XK_Right,  incrihgaps,     {.i = +1 } },
+	{ MODKEY|ALTKEY,                XK_Left,   incrihgaps,     {.i = -1 } },
+	{ MODKEY|ALTKEY,                XK_Up,     incrivgaps,     {.i = +1 } },
+	{ MODKEY|ALTKEY,                XK_Down,   incrivgaps,     {.i = -1 } },
+	{ MODKEY|ControlMask,           XK_Right,  incrohgaps,     {.i = +1 } },
+	{ MODKEY|ControlMask,           XK_Left,   incrohgaps,     {.i = -1 } },
+	{ MODKEY|ControlMask,           XK_Right,  incrovgaps,     {.i = +1 } },
+	{ MODKEY|ControlMask,           XK_Left,   incrovgaps,     {.i = -1 } },
 	{ MODKEY|ShiftMask,             XK_Return, zoom,           {0} },
 	{ MODKEY,                       XK_Tab,    view,           {0} },
 	{ MODKEY|ShiftMask,             XK_c,      killclient,     {0} },
-	{ MODKEY,                       XK_t,      setlayout,      {.v = &layouts[0]} },
-	{ MODKEY,                       XK_f,      setlayout,      {.v = &layouts[1]} },
-	{ MODKEY,                       XK_m,      setlayout,      {.v = &layouts[2]} },
+	{ MODKEY|ControlMask,           XK_t,      setlayout,      {.v = &layouts[0]} },
+	{ MODKEY|ControlMask,           XK_f,      setlayout,      {.v = &layouts[1]} },
+	{ MODKEY|ControlMask,           XK_m,      setlayout,      {.v = &layouts[2]} },
 	{ MODKEY|ALTKEY,		XK_f,      fullscreen,     {0} },
 	{ MODKEY,                       XK_space,  setlayout,      {0} },
 	{ MODKEY|ShiftMask,             XK_space,  togglefloating, {0} },
