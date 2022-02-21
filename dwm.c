@@ -2821,10 +2821,8 @@ view(const Arg *arg)
 pid_t
 winpid(Window w)
 {
-
 	pid_t result = 0;
 
-#ifdef __linux__
 	xcb_res_client_id_spec_t spec = {0};
 	spec.client = w;
 	spec.mask = XCB_RES_CLIENT_ID_MASK_LOCAL_CLIENT_PID;
@@ -2850,24 +2848,6 @@ winpid(Window w)
 
 	if (result == (pid_t)-1)
 		result = 0;
-
-#endif /* __linux__ */
-
-#ifdef __OpenBSD__
-        Atom type;
-        int format;
-        unsigned long len, bytes;
-        unsigned char *prop;
-        pid_t ret;
-
-        if (XGetWindowProperty(dpy, w, XInternAtom(dpy, "_NET_WM_PID", 0), 0, 1, False, AnyPropertyType, &type, &format, &len, &bytes, &prop) != Success || !prop)
-               return 0;
-
-        ret = *(pid_t*)prop;
-        XFree(prop);
-        result = ret;
-
-#endif /* __OpenBSD__ */
 	return result;
 }
 
@@ -2887,19 +2867,6 @@ getparentprocess(pid_t p)
 	fscanf(f, "%*u %*s %*c %u", &v);
 	fclose(f);
 #endif /* __linux__*/
-
-#ifdef __OpenBSD__
-	int n;
-	kvm_t *kd;
-	struct kinfo_proc *kp;
-
-	kd = kvm_openfiles(NULL, NULL, NULL, KVM_NO_FILES, NULL);
-	if (!kd)
-		return 0;
-
-	kp = kvm_getprocs(kd, KERN_PROC_PID, p, sizeof(*kp), &n);
-	v = kp->p_ppid;
-#endif /* __OpenBSD__ */
 
 	return (pid_t)v;
 }
@@ -2947,6 +2914,16 @@ swallowingclient(Window w)
 
 	return NULL;
 }
+
+
+
+
+
+
+
+
+
+
 
 Client *
 wintoclient(Window w)
