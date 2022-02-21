@@ -85,6 +85,12 @@ static const Layout layouts[] = {
 static char dmenumon[2] = "0"; /* component of dmenucmd, manipulated in spawn() */
 static const char *dmenucmd[] = { "dmenu_run", "-m", dmenumon, "-fn", dmenufont, "-nb", col_gray1, "-nf", col_gray3, "-sb", col_cyan, "-sf", col_gray4, NULL };
 static const char *termcmd[]  = { "kitty", NULL };
+static const char *filemanager[] = { "thunar", NULL };
+static const char *screenshot[] = { "spectacle", "--region", NULL };
+
+static const char *suspend[] = { "systemctl", "suspend", NULL };
+static const char *lock[] = { "betterlockscreen", "-l", NULL };
+static const char *logout[] = { "pkill", "dwm", NULL };
 
 #include <X11/XF86keysym.h>
 #include "shift-tools.c"
@@ -140,7 +146,14 @@ static Key keys[] = {
 	{ MODKEY,                       XK_period, focusmon,       {.i = +1 } },
 	{ MODKEY|ShiftMask,             XK_comma,  tagmon,         {.i = -1 } },
 	{ MODKEY|ShiftMask,             XK_period, tagmon,         {.i = +1 } },
-    { 0, XF86XK_AudioMute,		spawn,		SHCMD("pamixer -t; kill -44 $(pidof dwmblocks)") },
+
+	{ MODKEY|ShiftMask,             XK_s,      spawn,          {.v = suspend} },
+        { MODKEY|ControlMask|ALTKEY,    XK_l,      spawn,          {.v = lock} },
+	{ MODKEY|ControlMask,           XK_q,      spawn,          {.v = logout} },
+	{ 0,                            XK_Print,  spawn,	   {.v = screenshot} },
+	{ MODKEY|ShiftMask,  		XK_Return, spawn,          {.v = filemanager } },
+
+        { 0, XF86XK_AudioMute,		spawn,		SHCMD("pamixer -t; kill -44 $(pidof dwmblocks)") },
 	{ 0, XF86XK_AudioRaiseVolume,	spawn,		SHCMD("pamixer -i 3; kill -44 $(pidof dwmblocks)") },
 	{ 0, XF86XK_AudioLowerVolume,	spawn,		SHCMD("pamixer -d 3; kill -44 $(pidof dwmblocks)") },
 	{ 0, XF86XK_AudioPrev,		spawn,		SHCMD("playerctl previous") },
