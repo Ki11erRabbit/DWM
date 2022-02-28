@@ -87,7 +87,13 @@ static char dmenumon[2] = "0"; /* component of dmenucmd, manipulated in spawn() 
 static const char *dmenucmd[] = { "dmenu_run", "-m", dmenumon, "-fn", dmenufont, "-nb", col_gray1, "-nf", col_gray3, "-sb", col_cyan, "-sf", col_gray4, NULL };
 static const char *termcmd[]  = { "kitty", NULL };
 static const char *filemanager[] = { "thunar", NULL };
-static const char *screenshot[] = { "spectacle", "--region", NULL };
+static const char *screenshot[] = { "spectacle", "--fullscreen", "--background", NULL };
+static const char *screenshotclip[] = { "spectacle", "--fullscreen", "--background", "--copy-image", NULL };
+static const char *screenshotregion[] = { "spectacle", "--region", "--background", NULL };
+static const char *screenshotregionclip[] = { "spectacle", "--region", "--background", "--copy-image", NULL };
+static const char *termfm[] = { "kitty", "nnn", "-e", NULL }; 
+static const char *termfmalt[] = { "kitty", "nnn", "-c", NULL };
+static const char *clipboard[] = { "copyq", "menu", NULL };
 
 static const char *suspend[] = { "systemctl", "suspend", NULL };
 static const char *lock[] = { "betterlockscreen", "-l", NULL };
@@ -147,12 +153,19 @@ static Key keys[] = {
 	{ MODKEY,                       XK_period, focusmon,       {.i = +1 } },
 	{ MODKEY|ShiftMask,             XK_comma,  tagmon,         {.i = -1 } },
 	{ MODKEY|ShiftMask,             XK_period, tagmon,         {.i = +1 } },
+	
 
-	{ MODKEY|ShiftMask,             XK_s,      spawn,          {.v = suspend} },
+	{ MODKEY|ControlMask,           XK_s,      spawn,          {.v = suspend} },
         { MODKEY|ControlMask|ALTKEY,    XK_l,      spawn,          {.v = lock} },
 	{ MODKEY|ControlMask,           XK_q,      spawn,          {.v = logout} },
 	{ 0,                            XK_Print,  spawn,	   {.v = screenshot} },
+	{ 0|ShiftMask,                  XK_Print,  spawn,	   {.v = screenshotclip} },
+	{ MODKEY,                       XK_s,      spawn,          {.v = screenshotregion} },
+	{ MODKEY|ShiftMask,             XK_s,      spawn,          {.v = screenshotregionclip} },
 	{ MODKEY|ShiftMask,  		XK_Return, spawn,          {.v = filemanager } },
+	{ MODKEY|ControlMask,           XK_Return, spawn,          {.v = termfm } },
+	{ MODKEY|ControlMask|ALTKEY,    XK_Return, spawn,          {.v = termfmalt } },
+	{ MODKEY,                       XK_v,      spawn,          {.v = clipboard } },
 
         { 0, XF86XK_AudioMute,		spawn,		SHCMD("pamixer -t; kill -44 $(pidof dwmblocks)") },
 	{ 0, XF86XK_AudioRaiseVolume,	spawn,		SHCMD("pamixer -i 3; kill -44 $(pidof dwmblocks)") },
