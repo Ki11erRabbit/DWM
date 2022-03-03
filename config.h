@@ -16,8 +16,8 @@ static const unsigned int gappov    = 10;       /* vert outer gap between window
 static const int smartgaps          = 0;        /* 1 means no outer gap when there is only one window */
 static const int showbar            = 1;        /* 0 means no bar */
 static const int topbar             = 1;        /* 0 means bottom bar */
-static const char *fonts[]          = { "IBMPlexMono-Regular:size=10", "JoyPixels:pixelsize=10:antialias=true:autohint=true" };
-static const char dmenufont[]       = "IBMPlexMono-Regular:size=10";
+static const char *fonts[]          = { "LigalexMono:size=10",/*"IBMPlexMono-Regular:size=10",*/ "JoyPixels:pixelsize=10:antialias=true:autohint=true" };
+static const char dmenufont[]       = "LigalexMono:size=10"/*"IBMPlexMono-Regular:size=10"*/;
 static const char col_gray1[]       = "#222222";
 static const char col_gray2[]       = "#444444";
 static const char col_gray3[]       = "#bbbbbb";
@@ -91,8 +91,9 @@ static const char *screenshot[] = { "spectacle", "--fullscreen", "--background",
 static const char *screenshotclip[] = { "spectacle", "--fullscreen", "--background", "--copy-image", NULL };
 static const char *screenshotregion[] = { "spectacle", "--region", "--background", NULL };
 static const char *screenshotregionclip[] = { "spectacle", "--region", "--background", "--copy-image", NULL };
-static const char *termfm[] = { "kitty", "nnn", "-e", NULL }; 
-static const char *termfmalt[] = { "kitty", "nnn", "-c", NULL };
+static const char *screenshotregionannotate[] = { "flameshot", "gui", NULL };
+static const char *termfm[] = { "kitty", "nnn", "-a", "-c", "-P", "p", NULL }; 
+static const char *termfmedit[] = { "kitty", "nnn","-a", "-e", "-P", "p", NULL };
 static const char *clipboard[] = { "copyq", "menu", NULL };
 
 static const char *suspend[] = { "systemctl", "suspend", NULL };
@@ -162,9 +163,10 @@ static Key keys[] = {
 	{ 0|ShiftMask,                  XK_Print,  spawn,	   {.v = screenshotclip} },
 	{ MODKEY,                       XK_s,      spawn,          {.v = screenshotregion} },
 	{ MODKEY|ShiftMask,             XK_s,      spawn,          {.v = screenshotregionclip} },
+	{ MODKEY|ALTKEY,                XK_s,      spawn,          {.v = screenshotregionannotate} },
 	{ MODKEY|ShiftMask,  		XK_Return, spawn,          {.v = filemanager } },
-	{ MODKEY|ControlMask,           XK_Return, spawn,          {.v = termfm } },
-	{ MODKEY|ControlMask|ALTKEY,    XK_Return, spawn,          {.v = termfmalt } },
+	{ MODKEY|ShiftMask|ControlMask, XK_Return, spawn,          {.v = termfm } },
+	{ MODKEY|ControlMask,           XK_Return, spawn,          {.v = termfmedit } },
 	{ MODKEY,                       XK_v,      spawn,          {.v = clipboard } },
 
         { 0, XF86XK_AudioMute,		spawn,		SHCMD("pamixer -t; kill -44 $(pidof dwmblocks)") },
@@ -186,7 +188,7 @@ static Key keys[] = {
 	TAGKEYS(                        XK_7,                      6)
 	TAGKEYS(                        XK_8,                      7)
 	TAGKEYS(                        XK_9,                      8)
-	{ MODKEY|ShiftMask,             XK_BackSpace, quit,        {0} },
+	//{ MODKEY|ShiftMask,             XK_BackSpace, quit,        {0} },
 };
 
 /* button definitions */
