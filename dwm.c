@@ -776,7 +776,7 @@ configurenotify(XEvent *e)
 			drw_resize(drw, sw, bh);
 			updatebars();
 			for (m = mons; m; m = m->next) {
-				XMoveResizeWindow(dpy, m->barwin, m->wx, m->by, m->ww, bh);	
+				XMoveResizeWindow(dpy, m->barwin, m->wx, m->by, m->ww, bh);
 			}
 			focus(NULL);
 			arrange(NULL);
@@ -951,7 +951,7 @@ drawbar(Monitor *m)
 				ch = *s;
 				*s = '\0';
 				tw = TEXTW(text) - lrpad;
-				drw_text(drw, m->ww - statusw -getsystraywidth() + x, 0, tw, bh, 0, text, 0);
+				drw_text(drw, m->ww - statusw + x, 0, tw, bh, 0, text, 0);
 				x += tw;
 				*s = ch;
 				text = s + 1;
@@ -2596,7 +2596,7 @@ updatesizehints(Client *c)
 
 void
 updatestatus(void)
-{	
+{
 	Monitor* m;
 	if (!gettextprop(root, XA_WM_NAME, stext, sizeof(stext))) {
 		strcpy(stext, "dwm-"VERSION);
@@ -2617,7 +2617,7 @@ updatestatus(void)
 		statusw += TEXTW(text) - lrpad + 2;
 
 	}
-	for(m = mons; m; m = m->next) {	
+	for(m = mons; m; m = m->next) {
 		drawbar(m);
 		updatesystray();
 	}
