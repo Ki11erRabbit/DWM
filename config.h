@@ -4,7 +4,7 @@
 static const unsigned int borderpx  = 2;        /* border pixel of windows */
 static const unsigned int snap      = 32;       /* snap pixel */
 static const unsigned int systraypinning = 2;   /* 0: sloppy systray follows selected monitor, >0: pin systray to monitor X */
-static const unsigned int systrayonleft = 1;   	/* 0: systray in the right corner, >0: systray on left of status text */
+static const unsigned int systrayonleft = 0;   	/* 0: systray in the right corner, >0: systray on left of status text */
 static const unsigned int systrayspacing = 4;   /* systray spacing */
 static const int systraypinningfailfirst = 0;   /* 1: if pinning fails, display systray on the first monitor, False: display systray on the last monitor*/
 static const int showsystray        = 1;    	/* 0 means no systray */
@@ -99,7 +99,6 @@ static const char *termfm[] = { "kitty", "nnn", "-a", "-c", "-P", "p", NULL };
 static const char *termfmedit[] = { "kitty", "nnn","-a", "-e", "-P", "p", NULL };
 static const char *clipboard[] = { "copyq", "menu", NULL };
 static const char *applauncher[] = { "panther_launcher", NULL };
-static const char *notifcenter[] = { "kill", "-s", "USR1", "$(pidof deadd-notification-center)", NULL };
 
 static const char *suspend[] = { "systemctl", "suspend", NULL };
 static const char *lock[] = { "betterlockscreen", "-l", NULL };
@@ -111,22 +110,22 @@ static const char *logout[] = { "pkill", "dwm", NULL };
 static Key keys[] = {
 	/* modifier                     key        function        argument */
 	{ MODKEY,                       XK_o, shiftviewclients,    { .i = +1 } },
-	{ MODKEY,             		XK_u,	shiftview,         { .i = +1 } },
-	{ MODKEY,	      		XK_l,	shiftview,         { .i = -1 } },
-	{ MODKEY,	                XK_j, shiftviewclients,    { .i = -1 } },
+	{ MODKEY,             		XK_j,	shiftview,         { .i = +1 } },
+	{ MODKEY,	      		XK_k,	shiftview,         { .i = -1 } },
+	{ MODKEY,	                XK_y, shiftviewclients,    { .i = -1 } },
 	{ MODKEY,                       XK_d,      spawn,          {.v = dmenucmd } },
 	{ MODKEY,	      		XK_Return, spawn,          {.v = termcmd } },
 	{ MODKEY,                       XK_b,      togglebar,      {0} },
 	STACKKEYS(MODKEY,                          focus)
 	STACKKEYS(MODKEY|ShiftMask,                push)
-	{ MODKEY|ALTKEY,                XK_u,      incnmaster,     {.i = +1 } },
-	{ MODKEY|ALTKEY,                XK_l,      incnmaster,     {.i = -1 } },
-	{ MODKEY|ALTKEY,                XK_n,      setmfact,       {.f = -0.05} },
-	{ MODKEY|ShiftMask,		XK_l,      shiftboth,      { .i = -1 }	},
-	{ MODKEY|ControlMask,           XK_l,      shiftswaptags,  { .i = -1 }	},
-	{ MODKEY|ControlMask,   	XK_u,      shiftswaptags,  { .i = +1 }	},
-	{ MODKEY|ShiftMask,             XK_u,      shiftboth,      { .i = +1 }	},
-	{ MODKEY|ALTKEY,                XK_e,      setmfact,       {.f = +0.05} },
+	{ MODKEY,                       XK_u,      incnmaster,     {.i = +1 } },
+	{ MODKEY,                       XK_l,      incnmaster,     {.i = -1 } },
+	{ MODKEY,                       XK_m,      setmfact,       {.f = -0.05} },
+	{ MODKEY,                       XK_i,      setmfact,       {.f = +0.05} },
+	{ MODKEY|ShiftMask,		XK_k,      shiftboth,      { .i = -1 }	},
+	{ MODKEY|ControlMask,           XK_n,      shiftswaptags,  { .i = -1 }	},
+	{ MODKEY|ControlMask,   	XK_e,      shiftswaptags,  { .i = +1 }	},
+	{ MODKEY|ShiftMask,             XK_j,      shiftboth,      { .i = +1 }	},
 	{ MODKEY|ALTKEY,                XK_m,      incrgaps,       {.i = +1 } },
 	{ MODKEY|ALTKEY,                XK_i,      incrgaps,       {.i = -1 } },
 	{ MODKEY|ALTKEY|ShiftMask,      XK_m,      incrogaps,      {.i = +1 } },
@@ -145,7 +144,7 @@ static Key keys[] = {
 	{ MODKEY|ControlMask,           XK_Left,   incrovgaps,     {.i = -1 } },
 	{ MODKEY|ShiftMask,             XK_Return, zoom,           {0} },
 	{ MODKEY,                       XK_Tab,    view,           {0} },
-	{ MODKEY|ControlMask,           XK_c,      killclient,     {0} },
+	{ MODKEY|ShiftMask,             XK_c,      killclient,     {0} },
 	{ MODKEY,                       XK_t,      setlayout,      {.v = &layouts[0]} },
 	{ MODKEY,                       XK_f,      setlayout,      {.v = &layouts[1]} },
 	{ MODKEY|ControlMask,           XK_m,      setlayout,      {.v = &layouts[2]} },
