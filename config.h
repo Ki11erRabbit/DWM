@@ -43,7 +43,10 @@ static const Rule rules[] = {
 	{ "st",      NULL,     NULL,           0,         0,          1,           0,        -1 },
 	{ "kitty",   NULL,     NULL,           0,         0,          1,           0,        -1 },
 	{ "nnn",     NULL,     NULL,           0,         0,          1,           0,        -1 },
+	{ "handlr",  NULL,     NULL,           0,         0,          1,           0,        -1 },
 	{ "Discord", NULL,     NULL,           1 << 8,    0,          0,          -1,        -1 },
+	{ "Panther", NULL,     NULL,           0,         1,          0,          -1,        -1 },
+	{ "Black Mesa - OpenGL", NULL, NULL,   0,         0,          0,          -1,        -1 },
 	{ NULL,      NULL,     "Event Tester", 0,         0,          0,           1,        -1 }, /* xev */
 };
 
@@ -95,6 +98,8 @@ static const char *screenshotregionannotate[] = { "flameshot", "gui", NULL };
 static const char *termfm[] = { "kitty", "nnn", "-a", "-c", "-P", "p", NULL }; 
 static const char *termfmedit[] = { "kitty", "nnn","-a", "-e", "-P", "p", NULL };
 static const char *clipboard[] = { "copyq", "menu", NULL };
+static const char *applauncher[] = { "panther_launcher", NULL };
+static const char *notifcenter[] = { "kill", "-s", "USR1", "$(pidof deadd-notification-center)", NULL };
 
 static const char *suspend[] = { "systemctl", "suspend", NULL };
 static const char *lock[] = { "betterlockscreen", "-l", NULL };
@@ -140,13 +145,13 @@ static Key keys[] = {
 	{ MODKEY|ControlMask,           XK_Left,   incrovgaps,     {.i = -1 } },
 	{ MODKEY|ShiftMask,             XK_Return, zoom,           {0} },
 	{ MODKEY,                       XK_Tab,    view,           {0} },
-	{ MODKEY|ShiftMask,             XK_c,      killclient,     {0} },
-	{ MODKEY|ControlMask,           XK_t,      setlayout,      {.v = &layouts[0]} },
-	{ MODKEY|ControlMask,           XK_f,      setlayout,      {.v = &layouts[1]} },
+	{ MODKEY|ControlMask,           XK_c,      killclient,     {0} },
+	{ MODKEY,                       XK_t,      setlayout,      {.v = &layouts[0]} },
+	{ MODKEY,                       XK_f,      setlayout,      {.v = &layouts[1]} },
 	{ MODKEY|ControlMask,           XK_m,      setlayout,      {.v = &layouts[2]} },
 	{ MODKEY|ALTKEY,		XK_f,      fullscreen,     {0} },
 	{ MODKEY,                       XK_space,  setlayout,      {0} },
-	{ MODKEY|ShiftMask,             XK_space,  togglefloating, {0} },
+	{ MODKEY|ALTKEY,                XK_space,  togglefloating, {0} },
 	{ MODKEY|ShiftMask,             XK_f,      togglefullscr,  {0} },
 	{ MODKEY,                       XK_0,      view,           {.ui = ~0 } },
 	{ MODKEY|ShiftMask,             XK_0,      tag,            {.ui = ~0 } },
@@ -168,6 +173,8 @@ static Key keys[] = {
 	{ MODKEY|ShiftMask|ControlMask, XK_Return, spawn,          {.v = termfm } },
 	{ MODKEY|ControlMask,           XK_Return, spawn,          {.v = termfmedit } },
 	{ MODKEY,                       XK_v,      spawn,          {.v = clipboard } },
+	{ MODKEY,                       XK_h,      spawn,          {.v = applauncher } },
+	{ MODKEY,                       XK_c,      spawn,          SHCMD("kill -s USR1 $(pidof deadd-notification-center)") },
 
         { 0, XF86XK_AudioMute,		spawn,		SHCMD("pamixer -t; kill -44 $(pidof dwmblocks)") },
 	{ 0, XF86XK_AudioRaiseVolume,	spawn,		SHCMD("pamixer -i 3; kill -44 $(pidof dwmblocks)") },
