@@ -776,7 +776,7 @@ configurenotify(XEvent *e)
 			drw_resize(drw, sw, bh);
 			updatebars();
 			for (m = mons; m; m = m->next) {
-				XMoveResizeWindow(dpy, m->barwin, m->wx, m->by, m->ww, bh);
+				XMoveResizeWindow(dpy, m->barwin, m->wx, m->by, m->ww, bh);	
 			}
 			focus(NULL);
 			arrange(NULL);
@@ -983,7 +983,7 @@ drawbar(Monitor *m)
 	drw_setscheme(drw, scheme[SchemeNorm]);
 	x = drw_text(drw, x, 0, w, bh, lrpad / 2, m->ltsymbol, 0);
 
-	if ((w = m->ww - tw - stw - x -getsystraywidth()) > bh) {
+	if ((w = m->ww - tw - stw - x) > bh) {
 		if (m->sel) {
 			drw_setscheme(drw, scheme[m == selmon ? SchemeSel : SchemeNorm]);
 			drw_text(drw, x, 0, w, bh, lrpad / 2, m->sel->name, 0);
@@ -994,7 +994,7 @@ drawbar(Monitor *m)
 			drw_rect(drw, x, 0, w, bh, 1, 1);
 		}
 	}
-	drw_map(drw, m->barwin, 0, 0, m->ww - stw - getsystraywidth(), bh);
+	drw_map(drw, m->barwin, 0, 0, m->ww - stw, bh);
 }
 
 void
@@ -2596,7 +2596,7 @@ updatesizehints(Client *c)
 
 void
 updatestatus(void)
-{
+{	
 	Monitor* m;
 	if (!gettextprop(root, XA_WM_NAME, stext, sizeof(stext))) {
 		strcpy(stext, "dwm-"VERSION);
@@ -2617,7 +2617,7 @@ updatestatus(void)
 		statusw += TEXTW(text) - lrpad + 2;
 
 	}
-	for(m = mons; m; m = m->next) {
+	for(m = mons; m; m = m->next) {	
 		drawbar(m);
 		updatesystray();
 	}
