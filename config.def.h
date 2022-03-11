@@ -38,14 +38,14 @@ static const Rule rules[] = {
 	 *	WM_NAME(STRING) = title
 	 */
 	/* class     instance  title           tags mask  isfloating  isterminal  noswallow  monitor  float x,y,w,h      floatborderpx */
-	{ "Gimp",    NULL,     NULL,           0,         1,          0,           0,        -1,      50,50,1000,900,    1  },
+	{ "Gimp",    NULL,     NULL,           0,         1,          0,           0,        -1,      50,50,1896,1040,   1  },
 	{ "Firefox", NULL,     NULL,           1 << 8,    0,          0,          -1,        -1,      50,50,500,500,     5  },
 	{ "st",      NULL,     NULL,           0,         0,          1,           0,        -1,      50,50,500,500,     5  },
 	{ "kitty",   NULL,     NULL,           0,         0,          1,           0,        -1,      50,50,500,500,     5  },
 	{ "nnn",     NULL,     NULL,           0,         0,          1,           0,        -1,      50,50,500,500,     5  },
 	{ "handlr",  NULL,     NULL,           0,         0,          1,           0,        -1,      50,50,500,500,     5  },
 	{ "Discord", NULL,     NULL,           1 << 8,    0,          0,          -1,        -1,      50,50,500,500,     5  },
-	{ "Panther", NULL,     NULL,           0,         1,          0,          -1,        -1,      50,50,500,500,     2  },
+	{ "Panther", NULL,     NULL,           0,         1,          0,          -1,        -1,      1900,1060,500,500, 2  },
 	{ "Black Mesa - OpenGL", NULL, NULL,   0,         0,          0,          -1,        -1,      0,0,1920,1080,     1  },
 	{ NULL,      NULL,     "Event Tester", 0,         0,          0,           1,        -1,      50,50,500,500,     5  }, /* xev */
 };
@@ -82,6 +82,7 @@ static const Layout layouts[] = {
 
 /* helper for spawning shell commands in the pre dwm-5.0 fashion */
 #define SHCMD(cmd) { .v = (const char*[]){ "/bin/sh", "-c", cmd, NULL } }
+#define SHCMDZSH(cmd) { .v = (const char*[]){ "/bin/zsh", "-c", cmd, NULL } }
 
 #define STATUSBAR "dwmblocks"
 
@@ -170,12 +171,12 @@ static Key keys[] = {
 	{ MODKEY|ShiftMask,             XK_s,      spawn,          {.v = screenshotregionclip} },
 	{ MODKEY|ALTKEY,                XK_s,      spawn,          {.v = screenshotregionannotate} },
 	{ MODKEY|ShiftMask,  		XK_Return, spawn,          {.v = filemanager } },
-	{ MODKEY|ShiftMask|ControlMask, XK_Return, spawn,          {.v = termfm } },
-	{ MODKEY|ControlMask,           XK_Return, spawn,          {.v = termfmedit } },
+	{ MODKEY|ShiftMask|ControlMask, XK_Return, spawn,          SHCMDZSH("kitty nnn -a -c -P p") },//{.v = termfm } },
+	{ MODKEY|ControlMask,           XK_Return, spawn,          SHCMDZSH("kitty nnn -a -e -P p") }, //{.v = termfmedit } },
 	{ MODKEY,                       XK_v,      spawn,          {.v = clipboard } },
 	{ MODKEY,                       XK_h,      spawn,          {.v = applauncher } },
 	{ MODKEY,                       XK_c,      spawn,          SHCMD("kill -s USR1 $(pidof deadd-notification-center)") },
-	{ MODKEY|ShiftMask,             XK_d,      spawn,          {.v = keepmenu } },
+	{ MODKEY|ShiftMask,             XK_d,      spawn,          SHCMD("keepmenu") },//{.v = keepmenu } },
 
         { 0, XF86XK_AudioMute,		spawn,		SHCMD("pamixer -t; kill -44 $(pidof dwmblocks)") },
 	{ 0, XF86XK_AudioRaiseVolume,	spawn,		SHCMD("pamixer -i 3; kill -44 $(pidof dwmblocks)") },
