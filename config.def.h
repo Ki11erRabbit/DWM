@@ -33,13 +33,13 @@ typedef struct {
        const char *name;
        const void *cmd;
 } Sp;                                                                                                            
-const char *spcmd1[] = {"kitty", "-n", "spterm", "-g", "120x34", NULL };
-const char *spcmd2[] = {"kitty", "-n", "spfm", "-g", "144x41", "-e", "ranger", NULL };
+const char *spcmd1[] = {"kitty", "-T", "spterm", NULL };
+const char *spcmd2[] = {"kitty", "-T", "calcterm","-o", "font_size=14", "R", "-q", NULL };
 const char *spcmd3[] = {"keepassxc", NULL };
 static Sp scratchpads[] = {
        /* name          cmd  */
        {"spterm",      spcmd1},
-       {"spranger",    spcmd2},
+       {"termcalc",    spcmd2},
        {"keepassxc",   spcmd3},
 };
 
@@ -62,9 +62,10 @@ static const Rule rules[] = {
 	{ "Discord", NULL,     NULL,           1 << 8,    0,          0,          -1,        -1,      50,50,500,500,     5  },
 	{ "Panther", NULL,     NULL,           0,         1,          0,          -1,        -1,      1900,1060,500,500, 2  },
 	{ "Black Mesa - OpenGL", NULL, NULL,   0,         0,          0,          -1,        -1,      0,0,1920,1080,     1  },
-	{ NULL,      "spterm", NULL,           SPTAG(0),  1,         -1           -1,        -1,      50,50,500,500,     3  },
-        { NULL,      "spfm",   NULL,           SPTAG(1),  1,         -1           -1,        -1,      50,50,500,500,     3  },
-        { NULL,      "keepassxc",  NULL,       SPTAG(2),  0,         -1,          -1,        -1,      50,50,500,500,     3  },
+	{ NULL,      NULL,   "spterm",         SPTAG(0),  1,         -1,          -1,        -1,      240,1100,1400,800,   8  },
+        { NULL,      NULL,   "calcterm",       SPTAG(1),  1,         -1,          -1,        -1,      710,225,500,250,   8  },
+        { NULL,     "keepassxc", NULL,         SPTAG(2),  0,         -1,          -1,        -1,      50,50,500,500,     2  },
+	{ NULL,      NULL,   "cmus",           SPTAG(3),  1,         -1,          -1,        -1,      240,110,1400,800,   8  },
 	{ NULL,      NULL,     "Event Tester", 0,         0,          0,           1,        -1,      50,50,500,500,     5  }, /* xev */
 };
 
@@ -148,7 +149,7 @@ static Key keys[] = {
 	{ MODKEY|ControlMask,           XK_Left,   incrovgaps,     {.i = -1 } },*/
 //	{ MODKEY|ShiftMask,             XK_Return, zoom,           {0} },
 	{ MODKEY,                       XK_Tab,    view,           {0} },
-	{ MODKEY|ShiftMask,             XK_c,      killclient,     {0} },
+//	{ MODKEY|ShiftMask,             XK_c,      killclient,     {0} },
 	{ MODKEY,                       XK_q,      killclient,     {0} },
 	{ MODKEY,                       XK_t,      setlayout,      {.v = &layouts[0]} },//Tiling
 	{ MODKEY|ControlMask,           XK_f,      setlayout,      {.v = &layouts[1]} },//floating
@@ -163,9 +164,10 @@ static Key keys[] = {
 	{ MODKEY,                       XK_period, focusmon,       {.i = +1 } },
 	{ MODKEY|ShiftMask,             XK_comma,  tagmon,         {.i = -1 } },
 	{ MODKEY|ShiftMask,             XK_period, tagmon,         {.i = +1 } },
-	{ MODKEY|ControlMask,           XK_y,      togglescratch,  {.ui = 0 } },
-        { MODKEY|ControlMask,           XK_u,      togglescratch,  {.ui = 1 } },
-        { MODKEY|ControlMask,           XK_x,      togglescratch,  {.ui = 2 } },	
+	//******** Scratchpads
+	{ 0|ControlMask|ALTKEY,         XK_Return, togglescratch,  {.ui = 0 } },//scratchpad 
+        { MODKEY,                       XK_c,      togglescratch,  {.ui = 1 } },//calculator
+        { MODKEY|ControlMask,           XK_x,      togglescratch,  {.ui = 2 } },//keepassxc	
 	//******** System
 	{ MODKEY|ControlMask,           XK_s,      spawn,          SHCMD("systemctl suspend") },//suspend
         { MODKEY,                    XK_BackSpace, spawn,          SHCMD("betterlockscreen -l") },  //lock
@@ -178,13 +180,13 @@ static Key keys[] = {
 	{ MODKEY|ControlMask,           XK_Return, spawn,          SHCMDZSH("kitty nnn -a -e -P p") }, //{.v = termfmedit } },
 	{ MODKEY,                       XK_w,      spawn,          SHCMD("firefox") },
 	{ 0|ControlMask|ALTKEY,         XK_Delete, spawn,          SHCMD("kitty btop") }, 
-        { MODKEY|ShiftMask,             XK_m,      spawn,          SHCMDZSH("kitty cmus") },	
+        { MODKEY|ShiftMask,             XK_m,      spawn,          SHCMDZSH("kitty -T cmus screen -q -r -D cmus || screen -S cmus $(which --skip-alias cmus)") },	
 	{ 0,                            XK_Print,  spawn,	   SHCMD("spectacle --fullscreen --background --copy-image") },
 	{ MODKEY,                       XK_s,      spawn,          SHCMD("spectacle --region --background --copy-image") },
 	{ MODKEY|ALTKEY,                XK_s,      spawn,          SHCMD("flameshot gui") },
 	{ MODKEY,                       XK_v,      spawn,          SHCMD("copyq menu") },
 	{ MODKEY,                       XK_h,      spawn,          SHCMD("panther_launcher") },
-	{ MODKEY,                       XK_c,      spawn,          SHCMD("kill -s USR1 $(pidof deadd-notification-center)") },
+	{ MODKEY|ShiftMask,             XK_c,      spawn,          SHCMD("kill -s USR1 $(pidof deadd-notification-center)") },
 	{ MODKEY|ShiftMask,             XK_d,      spawn,          SHCMD("kitty keepmenu") },//{.v = keepmenu } },
 
 
