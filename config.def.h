@@ -16,8 +16,8 @@ static const unsigned int gappov    = 10;       /* vert outer gap between window
 static const int smartgaps          = 0;        /* 1 means no outer gap when there is only one window */
 static const int showbar            = 1;        /* 0 means no bar */
 static const int topbar             = 1;        /* 0 means bottom bar */
-static const char *fonts[]          = { "LigalexMono:size=5",/*"IBMPlexMono-Regular:size=10",*/ /*"JoyPixels*/"NotoColorEmoji:pixelsize=5:antialias=true:autohint=true" };
-static const char dmenufont[]       = "LigalexMono:size=5"/*"IBMPlexMono-Regular:size=10"*/;
+static const char *fonts[]          = { "LigalexMono:size=9",/*"IBMPlexMono-Regular:size=10",*/ /*"JoyPixels*/"twemoji:pixelsize=9:antialias=true:autohint=true" };
+static const char dmenufont[]       = "LigalexMono:size=9"/*"IBMPlexMono-Regular:size=10"*/;
 static const char col_gray1[]       = "#222222";
 static const char col_gray2[]       = "#444444";
 static const char col_gray3[]       = "#bbbbbb";
@@ -179,13 +179,13 @@ static Key keys[] = {
         { 0, XF86XK_AudioMute,		spawn,		SHCMD("pamixer -t; kill -44 $(pidof dwmblocks)") },
 	{ 0, XF86XK_AudioRaiseVolume,	spawn,		SHCMD("pamixer -i 3; kill -44 $(pidof dwmblocks)") },
 	{ 0, XF86XK_AudioLowerVolume,	spawn,		SHCMD("pamixer -d 3; kill -44 $(pidof dwmblocks)") },
-	{ 0, XF86XK_AudioPrev,		spawn,		SHCMD("playerctl previous") },
-	{ 0, XF86XK_AudioNext,		spawn,		SHCMD("playerctl next") },
-	{ 0, XF86XK_AudioPause,		spawn,		SHCMD("playerctl play-pause") },
-	{ 0, XF86XK_AudioPlay,		spawn,		SHCMD("playerctl play-pause") },
-	{ 0, XF86XK_AudioStop,		spawn,		SHCMD("playerctl stop") },
-	{ 0, XF86XK_AudioRewind,	spawn,		SHCMD("playerctl position -10") },
-	{ 0, XF86XK_AudioForward,	spawn,		SHCMD("playerctl position +10") },
+	{ 0, XF86XK_AudioPrev,		spawn,		SHCMD("playerctl previous; kill -52 $(pidof dwmblocks)") },
+	{ 0, XF86XK_AudioNext,		spawn,		SHCMD("playerctl next; kill -52 $(pidof dwmblocks)") },
+	{ 0, XF86XK_AudioPause,		spawn,		SHCMD("playerctl play-pause; kill -52 $(pidof dwmblocks)") },
+	{ 0, XF86XK_AudioPlay,		spawn,		SHCMD("playerctl play-pause; kill -52 $(pidof dwmblocks)") },
+	{ 0, XF86XK_AudioStop,		spawn,		SHCMD("playerctl stop; kill -52 $(pidof dwmblocks)") },
+	{ 0, XF86XK_AudioRewind,	spawn,		SHCMD("playerctl position -10; kill -52 $(pidof dwmblocks)") },
+	{ 0, XF86XK_AudioForward,	spawn,		SHCMD("playerctl position +10; kill -52 $(pidof dwmblocks)") },
 	TAGKEYS(                        XK_1,                      0)
 	TAGKEYS(                        XK_2,                      1)
 	TAGKEYS(                        XK_3,                      2)
