@@ -90,19 +90,6 @@ static const Layout layouts[] = {
 static char dmenumon[2] = "0"; /* component of dmenucmd, manipulated in spawn() */
 static const char *dmenucmd[] = { "dmenu_run", "-m", dmenumon, "-fn", dmenufont, "-nb", col_gray1, "-nf", col_gray3, "-sb", col_cyan, "-sf", col_gray4, NULL };
 static const char *termcmd[]  = { "kitty", NULL };
-static const char *filemanager[] = { "thunar", NULL };
-static const char *screenshot[] = { "spectacle", "--fullscreen", "--background", NULL };
-static const char *screenshotclip[] = { "spectacle", "--fullscreen", "--background", "--copy-image", NULL };
-static const char *screenshotregion[] = { "spectacle", "--region", "--background", NULL };
-static const char *screenshotregionclip[] = { "spectacle", "--region", "--background", "--copy-image", NULL };
-static const char *screenshotregionannotate[] = { "flameshot", "gui", NULL };
-static const char *clipboard[] = { "copyq", "menu", NULL };
-static const char *applauncher[] = { "panther_launcher", NULL };
-static const char *keepmenu[] = { "keepmenu", NULL };
-
-static const char *suspend[] = { "systemctl", "suspend", NULL };
-static const char *lock[] = { "betterlockscreen", "-l", NULL };
-static const char *logout[] = { "pkill", "dwm", NULL };
 
 #include <X11/XF86keysym.h>
 #include "shift-tools.c"
@@ -113,8 +100,6 @@ static Key keys[] = {
 	{ MODKEY,             		XK_j,	shiftview,         { .i = +1 } },
 	{ MODKEY,	      		XK_k,	shiftview,         { .i = -1 } },
 	{ MODKEY,	                XK_y, shiftviewclients,    { .i = -1 } },
-	{ MODKEY,                       XK_d,      spawn,          {.v = dmenucmd } },
-	{ MODKEY,	      		XK_Return, spawn,          {.v = termcmd } },
 	{ MODKEY,                       XK_b,      togglebar,      {0} },
 	STACKKEYS(MODKEY,                          focus)
 	STACKKEYS(MODKEY|ShiftMask,                push)
@@ -126,29 +111,30 @@ static Key keys[] = {
 	{ MODKEY|ControlMask,           XK_n,      shiftswaptags,  { .i = -1 }	},
 	{ MODKEY|ControlMask,   	XK_e,      shiftswaptags,  { .i = +1 }	},
 	{ MODKEY|ShiftMask,             XK_j,      shiftboth,      { .i = +1 }	},
-	{ MODKEY|ALTKEY,                XK_m,      incrgaps,       {.i = +1 } },
-	{ MODKEY|ALTKEY,                XK_i,      incrgaps,       {.i = -1 } },
-	{ MODKEY|ALTKEY|ShiftMask,      XK_m,      incrogaps,      {.i = +1 } },
+	{ MODKEY,                       XK_z,      incrgaps,       {.i = +1 } },
+	{ MODKEY,                       XK_x,      incrgaps,       {.i = -1 } },
+/*	{ MODKEY|ALTKEY|ShiftMask,      XK_m,      incrogaps,      {.i = +1 } },
 	{ MODKEY|ALTKEY|ShiftMask,      XK_i,      incrogaps,      {.i = -1 } },
 	{ MODKEY|ALTKEY|ControlMask,    XK_m,      incrigaps,      {.i = +1 } },
-	{ MODKEY|ALTKEY|ControlMask,    XK_i,      incrigaps,      {.i = -1 } },
+	{ MODKEY|ALTKEY|ControlMask,    XK_i,      incrigaps,      {.i = -1 } },*/
 	{ MODKEY,                       XK_g,      togglegaps,     {0} },
 	{ MODKEY|ShiftMask,             XK_g,      defaultgaps,    {0} },
-	{ MODKEY|ALTKEY,                XK_Right,  incrihgaps,     {.i = +1 } },
+/*	{ MODKEY|ALTKEY,                XK_Right,  incrihgaps,     {.i = +1 } },
 	{ MODKEY|ALTKEY,                XK_Left,   incrihgaps,     {.i = -1 } },
 	{ MODKEY|ALTKEY,                XK_Up,     incrivgaps,     {.i = +1 } },
 	{ MODKEY|ALTKEY,                XK_Down,   incrivgaps,     {.i = -1 } },
 	{ MODKEY|ControlMask,           XK_Right,  incrohgaps,     {.i = +1 } },
 	{ MODKEY|ControlMask,           XK_Left,   incrohgaps,     {.i = -1 } },
 	{ MODKEY|ControlMask,           XK_Right,  incrovgaps,     {.i = +1 } },
-	{ MODKEY|ControlMask,           XK_Left,   incrovgaps,     {.i = -1 } },
-	{ MODKEY|ShiftMask,             XK_Return, zoom,           {0} },
+	{ MODKEY|ControlMask,           XK_Left,   incrovgaps,     {.i = -1 } },*/
+//	{ MODKEY|ShiftMask,             XK_Return, zoom,           {0} },
 	{ MODKEY,                       XK_Tab,    view,           {0} },
 	{ MODKEY|ShiftMask,             XK_c,      killclient,     {0} },
-	{ MODKEY,                       XK_t,      setlayout,      {.v = &layouts[0]} },
-	{ MODKEY,                       XK_f,      setlayout,      {.v = &layouts[1]} },
-	{ MODKEY|ControlMask,           XK_m,      setlayout,      {.v = &layouts[2]} },
-	{ MODKEY|ALTKEY,		XK_f,      fullscreen,     {0} },
+	{ MODKEY,                       XK_q,      killclient,     {0} },
+	{ MODKEY,                       XK_t,      setlayout,      {.v = &layouts[0]} },//Tiling
+	{ MODKEY|ControlMask,           XK_f,      setlayout,      {.v = &layouts[1]} },//floating
+	{ MODKEY|ControlMask,           XK_m,      setlayout,      {.v = &layouts[2]} },//monacle
+	{ MODKEY,        		XK_f,      fullscreen,     {0} },
 	{ MODKEY,                       XK_space,  setlayout,      {0} },
 	{ MODKEY|ALTKEY,                XK_space,  togglefloating, {0} },
 	{ MODKEY|ShiftMask,             XK_f,      togglefullscr,  {0} },
@@ -159,24 +145,29 @@ static Key keys[] = {
 	{ MODKEY|ShiftMask,             XK_comma,  tagmon,         {.i = -1 } },
 	{ MODKEY|ShiftMask,             XK_period, tagmon,         {.i = +1 } },
 	
-
-	{ MODKEY|ControlMask,           XK_s,      spawn,          {.v = suspend} },
-        { MODKEY|ControlMask|ALTKEY,    XK_l,      spawn,          {.v = lock} },
-	{ MODKEY|ControlMask,           XK_q,      spawn,          {.v = logout} },
-	{ 0,                            XK_Print,  spawn,	   {.v = screenshot} },
-	{ 0|ShiftMask,                  XK_Print,  spawn,	   {.v = screenshotclip} },
-	{ MODKEY,                       XK_s,      spawn,          {.v = screenshotregion} },
-	{ MODKEY|ShiftMask,             XK_s,      spawn,          {.v = screenshotregionclip} },
-	{ MODKEY|ALTKEY,                XK_s,      spawn,          {.v = screenshotregionannotate} },
-	{ MODKEY|ShiftMask,  		XK_Return, spawn,          {.v = filemanager } },
-	{ MODKEY|ShiftMask|ControlMask, XK_Return, spawn,          SHCMDZSH("kitty nnn -a -c -P p") },//{.v = termfm } },
+	//******** System
+	{ MODKEY|ControlMask,           XK_s,      spawn,          SHCMD("systemctl suspend") },//suspend
+        { MODKEY,                    XK_BackSpace, spawn,          SHCMD("betterlockscreen -l") },  //lock
+	{ MODKEY|ControlMask,           XK_q,      spawn,          SHCMD("pkill dwm") },         //logout
+	//******** Programs
+	{ MODKEY,                       XK_d,      spawn,          {.v = dmenucmd } },
+	{ MODKEY,	      		XK_Return, spawn,          {.v = termcmd } },
+	{ MODKEY,        		XK_r,      spawn,          SHCMD("thunar") },
+	{ MODKEY|ShiftMask,             XK_Return, spawn,          SHCMDZSH("kitty nnn -a -c -P p") },//{.v = termfm } },
 	{ MODKEY|ControlMask,           XK_Return, spawn,          SHCMDZSH("kitty nnn -a -e -P p") }, //{.v = termfmedit } },
-	{ MODKEY,                       XK_v,      spawn,          {.v = clipboard } },
-	{ MODKEY,                       XK_h,      spawn,          {.v = applauncher } },
+	{ MODKEY,                       XK_w,      spawn,          SHCMD("firefox") },
+	{ 0|ControlMask|ALTKEY,         XK_Delete, spawn,          SHCMD("kitty btop") }, 
+        { MODKEY|ShiftMask,             XK_m,      spawn,          SHCMDZSH("kitty cmus") },	
+	{ 0,                            XK_Print,  spawn,	   SHCMD("spectacle --fullscreen --background --copy-image") },
+	{ MODKEY,                       XK_s,      spawn,          SHCMD("spectacle --region --background --copy-image") },
+	{ MODKEY|ALTKEY,                XK_s,      spawn,          SHCMD("flameshot gui") },
+	{ MODKEY,                       XK_v,      spawn,          SHCMD("copyq menu") },
+	{ MODKEY,                       XK_h,      spawn,          SHCMD("panther_launcher") },
 	{ MODKEY,                       XK_c,      spawn,          SHCMD("kill -s USR1 $(pidof deadd-notification-center)") },
-	{ MODKEY|ShiftMask,             XK_d,      spawn,          SHCMD("keepmenu") },//{.v = keepmenu } },
+	{ MODKEY|ShiftMask,             XK_d,      spawn,          SHCMD("kitty keepmenu") },//{.v = keepmenu } },
 
-        { 0, XF86XK_AudioMute,		spawn,		SHCMD("pamixer -t; kill -44 $(pidof dwmblocks)") },
+
+	{ 0, XF86XK_AudioMute,		spawn,		SHCMD("pamixer -t; kill -44 $(pidof dwmblocks)") },
 	{ 0, XF86XK_AudioRaiseVolume,	spawn,		SHCMD("pamixer -i 3; kill -44 $(pidof dwmblocks)") },
 	{ 0, XF86XK_AudioLowerVolume,	spawn,		SHCMD("pamixer -d 3; kill -44 $(pidof dwmblocks)") },
 	{ 0, XF86XK_AudioPrev,		spawn,		SHCMD("playerctl previous; kill -52 $(pidof dwmblocks)") },
