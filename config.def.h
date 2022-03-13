@@ -220,6 +220,8 @@ static Button buttons[] = {
 	{ ClkStatusText,        0,              Button4,        sigstatusbar,   {.i = 4} },
         { ClkStatusText,        0,              Button5,        sigstatusbar,   {.i = 5} },
         { ClkStatusText,        ShiftMask,      Button1,        sigstatusbar,   {.i = 6} },
+	{ ClkStatusText,        ShiftMask,      Button4,        sigstatusbar,   {.i = 7} },
+        { ClkStatusText,        ShiftMask,      Button5,        sigstatusbar,   {.i = 8} },
 
 	{ ClkClientWin,         MODKEY,         Button1,        movemouse,      {0} },
 	{ ClkClientWin,         MODKEY,         Button2,        togglefloating, {0} },
