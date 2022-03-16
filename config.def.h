@@ -44,6 +44,19 @@ static Sp scratchpads[] = {
 };
 
 
+static const char *const autostart[] = {
+	"picom", "--experimental-backend",NULL,
+	"deadd-notification-center", NULL,
+	"dwmblocks", NULL,
+	"sh", "-c","lock", NULL,
+	"copyq", NULL,
+	"playrectld","daemon", NULL,
+	"flameshot", NULL,
+	"/usr/lib/polkit-gnome/polkit-gnome-authentication-agent-1", NULL,
+
+	NULL /* terminate */
+};
+
 /* tagging */
 static const char *tags[] = { "1", "2", "3", "4", "5", "6", "7", "8", "9" };
 
