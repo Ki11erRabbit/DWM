@@ -17,7 +17,7 @@ static const int smartgaps          = 0;        /* 1 means no outer gap when the
 static const int showbar            = 1;        /* 0 means no bar */
 static const int topbar             = 1;        /* 0 means bottom bar */
 static const char *fonts[]          = { "LigalexMono:size=9",/*"IBMPlexMono-Regular:size=10",*/ /*"JoyPixels*/"twemoji:pixelsize=9:antialias=true:autohint=true" };
-static const char dmenufont[]       = "LigalexMono:size=9"/*"IBMPlexMono-Regular:size=10"*/;
+static const char dmenufont[]      = "LigalexMono:size=9";
 static const char col_gray1[]       = "#222222";
 static const char col_gray2[]       = "#444444";
 static const char col_gray3[]       = "#bbbbbb";
@@ -62,10 +62,11 @@ static const Rule rules[] = {
 	{ "Discord", NULL,     NULL,           1 << 8,    0,          0,          -1,        -1,      50,50,500,500,     5  },
 	{ "Panther", NULL,     NULL,           0,         1,          0,          -1,        -1,      1900,1060,500,500, 2  },
 	{ "Black Mesa - OpenGL", NULL, NULL,   0,         0,          0,          -1,        -1,      0,0,1920,1080,     1  },
-	{ NULL,      NULL,   "spterm",         SPTAG(0),  1,         -1,          -1,        -1,      240,1100,1400,800,   8  },
-        { NULL,      NULL,   "calcterm",       SPTAG(1),  1,         -1,          -1,        -1,      710,225,500,250,   8  },
+	{ NULL,      NULL,   "spterm",         SPTAG(0),  1,         -1,          -1,         0,      240,1100,1400,800,   8  },
+        { NULL,      NULL,   "calcterm",       SPTAG(1),  1,         -1,          -1,         0,      710,225,500,250,   8  },
         { NULL,     "keepassxc", NULL,         SPTAG(2),  0,         -1,          -1,        -1,      50,50,500,500,     2  },
-	{ NULL,      NULL,   "cmus",           SPTAG(3),  1,         -1,          -1,        -1,      240,110,1400,800,   8  },
+	{ NULL,      NULL,   "cmus",           0,         1,         -1,          -1,        -1,      240,110,1400,800,   8  },
+	{ "copyq",      NULL,   NULL,           0,         1,         -1,          -1,        -1,      140,110,800,900,   8  },
 	{ NULL,      NULL,     "Event Tester", 0,         0,          0,           1,        -1,      50,50,500,500,     5  }, /* xev */
 };
 
@@ -171,7 +172,7 @@ static Key keys[] = {
 	//******** System
 	{ MODKEY|ControlMask,           XK_s,      spawn,          SHCMD("systemctl suspend") },//suspend
         { MODKEY,                    XK_BackSpace, spawn,          SHCMD("betterlockscreen -l") },  //lock
-	{ MODKEY|ControlMask,           XK_q,      spawn,          SHCMD("pkill dwm") },         //logout
+	{ MODKEY|ControlMask,           XK_q,      spawn,          SHCMD("sysact") },         //logout
 	//******** Programs
 	{ MODKEY,                       XK_d,      spawn,          {.v = dmenucmd } },
 	{ MODKEY,	      		XK_Return, spawn,          {.v = termcmd } },
@@ -181,13 +182,15 @@ static Key keys[] = {
 	{ MODKEY,                       XK_w,      spawn,          SHCMD("firefox") },
 	{ 0|ControlMask|ALTKEY,         XK_Delete, spawn,          SHCMD("kitty btop") }, 
         { MODKEY|ShiftMask,             XK_m,      spawn,          SHCMDZSH("kitty -T cmus screen -q -r -D cmus || screen -S cmus $(which --skip-alias cmus)") },	
-	{ 0,                            XK_Print,  spawn,	   SHCMD("spectacle --fullscreen --background --copy-image") },
-	{ MODKEY,                       XK_s,      spawn,          SHCMD("spectacle --region --background --copy-image") },
+	{ 0,                            XK_Print,  spawn,	   SHCMD("spectacle --fullscreen --background") },
+	{ MODKEY,                       XK_s,      spawn,          SHCMD("spectacle --region --background") },
+	{ MODKEY|ShiftMask,             XK_s,      spawn,          SHCMD("spectacle --region --background --copy-image") },
 	{ MODKEY|ALTKEY,                XK_s,      spawn,          SHCMD("flameshot gui") },
 	{ MODKEY,                       XK_v,      spawn,          SHCMD("copyq menu") },
 	{ MODKEY,                       XK_h,      spawn,          SHCMD("panther_launcher") },
 	{ MODKEY|ShiftMask,             XK_c,      spawn,          SHCMD("kill -s USR1 $(pidof deadd-notification-center)") },
-	{ MODKEY|ShiftMask,             XK_d,      spawn,          SHCMD("kitty keepmenu") },//{.v = keepmenu } },
+	{ MODKEY|ShiftMask,             XK_d,      spawn,          SHCMD("keepmenu") },//{.v = keepmenu } },
+        { MODKEY|ControlMask,           XK_v,      spawn,          SHCMD("copyq toggle") },//copyq	
 
 
 	{ 0, XF86XK_AudioMute,		spawn,		SHCMD("pamixer -t; kill -44 $(pidof dwmblocks)") },
@@ -209,7 +212,7 @@ static Key keys[] = {
 	TAGKEYS(                        XK_7,                      6)
 	TAGKEYS(                        XK_8,                      7)
 	TAGKEYS(                        XK_9,                      8)
-	//{ MODKEY|ShiftMask,             XK_BackSpace, quit,        {0} },
+	{ MODKEY|ShiftMask,             XK_BackSpace, quit,        {0} },
 };
 
 /* button definitions */
