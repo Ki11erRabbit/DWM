@@ -33,8 +33,10 @@ typedef struct {
        const char *name;
        const void *cmd;
 } Sp;                                                                                                            
-const char *spcmd1[] = {"kitty", "-T", "spterm", NULL };
-const char *spcmd2[] = {"kitty", "-T", "calcterm","-o", "font_size=14", "R", "-q", NULL };
+//const char *spcmd1[] = {"kitty", "-T", "spterm", NULL };
+//const char *spcmd2[] = {"kitty", "-T", "calcterm","-o", "font_size=14", "R", "-q", NULL };
+const char *spcmd1[] = {"alacritty", "-t", "spterm", NULL };
+const char *spcmd2[] = {"alacritty", "-t", "calcterm","-o", "font_size=14","-e", "R", "-q", NULL };
 const char *spcmd3[] = {"keepassxc", NULL };
 static Sp scratchpads[] = {
        /* name          cmd  */
@@ -45,14 +47,13 @@ static Sp scratchpads[] = {
 
 
 static const char *const autostart[] = {
-	"picom", "--experimental-backend",NULL,
 	"deadd-notification-center", NULL,
 	"dwmblocks", NULL,
-	"sh", "-c","lock", NULL,
+	"lock", NULL,
+	"hotcorners", NULL,
 	"copyq", NULL,
 	"playrectld","daemon", NULL,
 	"flameshot", NULL,
-	"/usr/lib/polkit-gnome/polkit-gnome-authentication-agent-1", NULL,
 
 	NULL /* terminate */
 };
@@ -67,20 +68,20 @@ static const Rule rules[] = {
 	 */
 	/* class     instance  title           tags mask  isfloating  isterminal  noswallow  monitor  float x,y,w,h      floatborderpx */
 	{ "Gimp",    NULL,     NULL,           0,         1,          0,           0,        -1,      50,50,1896,1040,   1  },
-	{ "Firefox", NULL,     NULL,           1 << 8,    0,          0,          -1,        -1,      50,50,500,500,     5  },
-	{ "st",      NULL,     NULL,           0,         0,          1,           0,        -1,      50,50,500,500,     5  },
-	{ "kitty",   NULL,     NULL,           0,         0,          1,           0,        -1,      50,50,500,500,     5  },
-	{ "nnn",     NULL,     NULL,           0,         0,          1,           0,        -1,      50,50,500,500,     5  },
-	{ "handlr",  NULL,     NULL,           0,         0,          1,           0,        -1,      50,50,500,500,     5  },
-	{ "Discord", NULL,     NULL,           1 << 8,    0,          0,          -1,        -1,      50,50,500,500,     5  },
+	{ "Firefox", NULL,     NULL,           1 << 8,    0,          0,          -1,        -1,      50,50,500,500,     4  },
+	{ "st",      NULL,     NULL,           0,         0,          1,           0,        -1,      50,50,500,500,     4  },
+	{ "kitty",   NULL,     NULL,           0,         0,          1,           0,        -1,      50,50,500,500,     4  },
+	{ "nnn",     NULL,     NULL,           0,         0,          1,           0,        -1,      50,50,500,500,     4  },
+	{ "handlr",  NULL,     NULL,           0,         0,          1,           0,        -1,      50,50,500,500,     4  },
+	{ "Discord", NULL,     NULL,           1 << 8,    0,          0,          -1,        -1,      50,50,500,500,     4  },
 	{ "Panther", NULL,     NULL,           0,         1,          0,          -1,        -1,      1900,1060,500,500, 2  },
-	{ "Black Mesa - OpenGL", NULL, NULL,   0,         0,          0,          -1,        -1,      0,0,1920,1080,     1  },
+	{ "Black Mesa - OpenGL", NULL, NULL,   0,         0,          0,          -1,        -1,      0,0,1920,1080,     0  },
 	{ NULL,      NULL,   "spterm",         SPTAG(0),  1,         -1,          -1,         0,      240,1100,1400,800,   8  },
-        { NULL,      NULL,   "calcterm",       SPTAG(1),  1,         -1,          -1,         0,      710,225,500,250,   8  },
+        { NULL,      NULL,   "calcterm",       SPTAG(1),  1,         -1,          -1,         0,      710,225,500,250,   4  },
         { NULL,     "keepassxc", NULL,         SPTAG(2),  0,         -1,          -1,        -1,      50,50,500,500,     2  },
-	{ NULL,      NULL,   "cmus",           0,         1,         -1,          -1,        -1,      240,110,1400,800,   8  },
-	{ "copyq",      NULL,   NULL,           0,         1,         -1,          -1,        -1,      140,110,800,900,   8  },
-	{ NULL,      NULL,     "Event Tester", 0,         0,          0,           1,        -1,      50,50,500,500,     5  }, /* xev */
+	{ NULL,      NULL,   "cmus",           0,         1,         -1,          -1,        -1,      240,110,1400,800,   4  },
+	{ "copyq",      NULL,   NULL,           0,         1,         -1,          -1,        -1,      140,110,800,900,   4  },
+	{ NULL,      NULL,     "Event Tester", 0,         0,          0,           1,        -1,      50,50,500,500,     4  }, /* xev */
 };
 
 /* layout(s) */
@@ -122,7 +123,7 @@ static const Layout layouts[] = {
 /* commands */
 static char dmenumon[2] = "0"; /* component of dmenucmd, manipulated in spawn() */
 static const char *dmenucmd[] = { "dmenu_run", "-m", dmenumon, "-fn", dmenufont, "-nb", col_gray1, "-nf", col_gray3, "-sb", col_cyan, "-sf", col_gray4, NULL };
-static const char *termcmd[]  = { "kitty", NULL };
+static const char *termcmd[]  = { "alacritty", NULL };
 
 #include <X11/XF86keysym.h>
 #include "shift-tools.c"
@@ -142,8 +143,8 @@ static Key keys[] = {
 	{ MODKEY,                       XK_m,      setmfact,       {.f = -0.05} },
 	{ MODKEY,                       XK_i,      setmfact,       {.f = +0.05} },
 	{ MODKEY|ShiftMask,		XK_k,      shiftboth,      { .i = -1 }	},
-	{ MODKEY|ControlMask,           XK_n,      shiftswaptags,  { .i = -1 }	},
-	{ MODKEY|ControlMask,   	XK_e,      shiftswaptags,  { .i = +1 }	},
+	{ MODKEY|ControlMask,           XK_k,      shiftswaptags,  { .i = -1 }	},
+	{ MODKEY|ControlMask,   	XK_j,      shiftswaptags,  { .i = +1 }	},
 	{ MODKEY|ShiftMask,             XK_j,      shiftboth,      { .i = +1 }	},
 	{ MODKEY,                       XK_z,      incrgaps,       {.i = +1 } },
 	{ MODKEY,                       XK_x,      incrgaps,       {.i = -1 } },
@@ -190,11 +191,15 @@ static Key keys[] = {
 	{ MODKEY,                       XK_d,      spawn,          {.v = dmenucmd } },
 	{ MODKEY,	      		XK_Return, spawn,          {.v = termcmd } },
 	{ MODKEY,        		XK_r,      spawn,          SHCMD("thunar") },
-	{ MODKEY|ShiftMask,             XK_Return, spawn,          SHCMDZSH("kitty nnn -a -c -P p") },//{.v = termfm } },
-	{ MODKEY|ControlMask,           XK_Return, spawn,          SHCMDZSH("kitty nnn -a -e -P p") }, //{.v = termfmedit } },
+	//{ MODKEY|ShiftMask,             XK_Return, spawn,          SHCMDZSH("kitty nnn -a -c -P p") },//{.v = termfm } },
+	//{ MODKEY|ControlMask,           XK_Return, spawn,          SHCMDZSH("kitty nnn -a -e -P p") }, //{.v = termfmedit } },
+	{ MODKEY|ShiftMask,             XK_Return, spawn,          SHCMDZSH("alacritty -e nnn -a -c -P p") },//{.v = termfm } },
+	{ MODKEY|ControlMask,           XK_Return, spawn,          SHCMDZSH("alacritty nnn -a -e -P p") }, //{.v = termfmedit } },
 	{ MODKEY,                       XK_w,      spawn,          SHCMD("firefox") },
-	{ 0|ControlMask|ALTKEY,         XK_Delete, spawn,          SHCMD("kitty btop") }, 
-        { MODKEY|ShiftMask,             XK_m,      spawn,          SHCMDZSH("kitty -T cmus screen -q -r -D cmus || screen -S cmus $(which --skip-alias cmus)") },	
+	//{ 0|ControlMask|ALTKEY,         XK_Delete, spawn,          SHCMD("kitty btop") }, 
+        //{ MODKEY|ShiftMask,             XK_m,      spawn,          SHCMDZSH("kitty -T cmus screen -q -r -D cmus || screen -S cmus $(which --skip-alias cmus)") },	
+	{ 0|ControlMask|ALTKEY,         XK_Delete, spawn,          SHCMD("alacritty -e btop") }, 
+        { MODKEY|ShiftMask,             XK_m,      spawn,          SHCMDZSH("alacritty -t cmus -e screen -q -r -D cmus || screen -S cmus $(which --skip-alias cmus)") },	
 	{ 0,                            XK_Print,  spawn,	   SHCMD("spectacle --fullscreen --background") },
 	{ MODKEY,                       XK_s,      spawn,          SHCMD("spectacle --region --background") },
 	{ MODKEY|ShiftMask,             XK_s,      spawn,          SHCMD("spectacle --region --background --copy-image") },
@@ -255,7 +260,7 @@ static Button buttons[] = {
 
 	{ ClkClientWin,         MODKEY,         Button1,        movemouse,      {0} },
 	{ ClkClientWin,         MODKEY,         Button2,        togglefloating, {0} },
-	{ ClkClientWin,         MODKEY,         Button1,        resizemouse,    {0} },
+	{ ClkClientWin,         MODKEY,         Button3,        resizemouse,    {0} },
 	{ ClkTagBar,            0,              Button1,        view,           {0} },
 	{ ClkTagBar,            0,              Button3,        toggleview,     {0} },
 	{ ClkTagBar,            MODKEY,         Button1,        tag,            {0} },
