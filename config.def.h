@@ -48,9 +48,6 @@ static Sp scratchpads[] = {
 
 static const char *const autostart[] = {
 	"deadd-notification-center", NULL,
-	"dwmblocks", NULL,
-	"lock", NULL,
-	"hotcorners", NULL,
 	"copyq", NULL,
 	"playrectld","daemon", NULL,
 	"flameshot", NULL,
@@ -110,10 +107,10 @@ static const Layout layouts[] = {
 	{ MOD, XK_n,     ACTION##stack, {.i = INC(+1) } }, \
 	{ MOD, XK_e,     ACTION##stack, {.i = INC(-1) } }, \
 	{ MOD, XK_grave, ACTION##stack, {.i = PREVSEL } }, \
-	{ MOD, XK_q,     ACTION##stack, {.i = 0 } }, \
+	{ MOD, XK_t,     ACTION##stack, {.i = 0 } }, \
 	{ MOD, XK_a,     ACTION##stack, {.i = 1 } }, \
 	{ MOD, XK_z,     ACTION##stack, {.i = 2 } }, \
-	{ MOD, XK_x,     ACTION##stack, {.i = -1 } },
+	{ MOD, XK_b,     ACTION##stack, {.i = -1 } },
 
 /* helper for spawning shell commands in the pre dwm-5.0 fashion */
 #define SHCMD(cmd) { .v = (const char*[]){ "/bin/sh", "-c", cmd, NULL } }
@@ -136,7 +133,7 @@ static Key keys[] = {
 	{ MODKEY,             		XK_j,	shiftview,         { .i = +1 } },
 	{ MODKEY,	      		XK_k,	shiftview,         { .i = -1 } },
 	{ MODKEY|ALTKEY,                XK_y, shiftviewclients,    { .i = -1 } },
-	{ MODKEY,                       XK_b,      togglebar,      {0} },
+	{ MODKEY|ShiftMask,             XK_b,      togglebar,      {0} },
 	STACKKEYS(MODKEY,                          focus)
 	STACKKEYS(MODKEY|ShiftMask,                push)
 	{ MODKEY,                       XK_u,      incnmaster,     {.i = +1 } },
@@ -147,8 +144,8 @@ static Key keys[] = {
 	{ MODKEY|ControlMask,           XK_k,      shiftswaptags,  { .i = -1 }	},
 	{ MODKEY|ControlMask,   	XK_j,      shiftswaptags,  { .i = +1 }	},
 	{ MODKEY|ShiftMask,             XK_j,      shiftboth,      { .i = +1 }	},
-	{ MODKEY,                       XK_z,      incrgaps,       {.i = +1 } },
-	{ MODKEY,                       XK_x,      incrgaps,       {.i = -1 } },
+	{ MODKEY|ALTKEY,                XK_z,      incrgaps,       {.i = +1 } },
+	{ MODKEY|ALTKEY,                XK_x,      incrgaps,       {.i = -1 } },
 /*	{ MODKEY|ALTKEY|ShiftMask,      XK_m,      incrogaps,      {.i = +1 } },
 	{ MODKEY|ALTKEY|ShiftMask,      XK_i,      incrogaps,      {.i = -1 } },
 	{ MODKEY|ALTKEY|ControlMask,    XK_m,      incrigaps,      {.i = +1 } },
@@ -167,13 +164,13 @@ static Key keys[] = {
 	{ MODKEY,                       XK_Tab,    view,           {0} },
 //	{ MODKEY|ShiftMask,             XK_c,      killclient,     {0} },
 	{ MODKEY,                       XK_q,      killclient,     {0} },
-	{ MODKEY,                       XK_t,      setlayout,      {.v = &layouts[0]} },//Tiling
-	{ MODKEY|ControlMask,           XK_f,      setlayout,      {.v = &layouts[1]} },//floating
+	{ MODKEY|ShiftMask,             XK_t,      setlayout,      {.v = &layouts[0]} },//Tiling
+	{ MODKEY|ShiftMask,             XK_f,      setlayout,      {.v = &layouts[1]} },//floating
 	{ MODKEY|ControlMask,           XK_m,      setlayout,      {.v = &layouts[2]} },//monacle
 	{ MODKEY,        		XK_f,      fullscreen,     {0} },
 	{ MODKEY,                       XK_space,  setlayout,      {0} },
 	{ MODKEY|ALTKEY,                XK_space,  togglefloating, {0} },
-	{ MODKEY|ShiftMask,             XK_f,      togglefullscr,  {0} },
+	{ MODKEY|ALTKEY,                XK_f,      togglefullscr,  {0} },
 	{ MODKEY,                       XK_0,      view,           {.ui = ~0 } },
 	{ MODKEY|ShiftMask,             XK_0,      tag,            {.ui = ~0 } },
 	{ MODKEY,                       XK_comma,  focusmon,       {.i = -1 } },
