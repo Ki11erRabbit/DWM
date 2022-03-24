@@ -213,7 +213,19 @@ static Key keys[] = {
         { MODKEY|ALTKEY,                XK_h,      spawn,          SHCMD("groff -mom ~/.dwm/help/dwm-help.mom -Tpdf | zathura -") },//help menu	
 
 	
-        { 0, XF86XK_Mail,               spawn,          SHCMD("thunderbird") },	
+        { 0, XF86XK_AudioMicMute,               spawn,          SHCMD("amixer set Capture toggle; kill -46 $(pidof dwmblocks)") },	
+       /* { 0, XF86XK_Launch5,               spawn,          SHCMD("") },	
+        { 0, XF86XK_Launch6,               spawn,          SHCMD("") },	
+        { 0, XF86XK_Launch7,               spawn,          SHCMD("") },	
+        { 0, XF86XK_Launch8,               spawn,          SHCMD("") },	
+        { 0, XF86XK_Launch9,               spawn,          SHCMD("") },	
+        { 0, XF86XK_Tools,               spawn,          SHCMD("") },	
+        { 0, XF86XK_Tools,               spawn,          SHCMD("") },	
+        { 0, XF86XK_TouchpadToggle,               spawn,          SHCMD("") },	
+        { 0, XF86XK_TouchpadOn,               spawn,          SHCMD("") },	
+        { 0, XF86XK_TouchpadOff,               spawn,          SHCMD("") },*/	
+        
+	{ 0, XF86XK_Mail,               spawn,          SHCMD("thunderbird") },	
         { 0, XF86XK_HomePage,           spawn,          SHCMDZSH("$BROWSER") },	
         { 0, XF86XK_Forward,            spawn,          SHCMD("brave") },	
         { 0, XF86XK_Back,               spawn,          SHCMD("tabbed -c surf -e") },	
