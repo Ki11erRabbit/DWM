@@ -51,6 +51,8 @@ static const char *const autostart[] = {
 	"copyq", NULL,
 	"playrectld","daemon", NULL,
 	"flameshot", NULL,
+	"dwmblocks", NULL,
+	"lock", NULL,
 
 	NULL /* terminate */
 };
@@ -130,20 +132,20 @@ static const char *termcmd[]  = { "alacritty", NULL };
 static Key keys[] = {
 	/* modifier                     key        function        argument */
 	{ MODKEY|ALTKEY,                XK_o, shiftviewclients,    { .i = +1 } },
-	{ MODKEY,             		XK_j,	shiftview,         { .i = +1 } },
-	{ MODKEY,	      		XK_k,	shiftview,         { .i = -1 } },
+	{ MODKEY,             		XK_u,	shiftview,         { .i = +1 } },
+	{ MODKEY,	      		XK_l,	shiftview,         { .i = -1 } },
 	{ MODKEY|ALTKEY,                XK_y, shiftviewclients,    { .i = -1 } },
-	{ MODKEY|ShiftMask,             XK_b,      togglebar,      {0} },
+	{ MODKEY|ControlMask,           XK_b,      togglebar,      {0} },
 	STACKKEYS(MODKEY,                          focus)
 	STACKKEYS(MODKEY|ShiftMask,                push)
-	{ MODKEY,                       XK_u,      incnmaster,     {.i = +1 } },
-	{ MODKEY,                       XK_l,      incnmaster,     {.i = -1 } },
+	{ MODKEY|ShiftMask,             XK_i,      incnmaster,     {.i = +1 } },
+	{ MODKEY|ShiftMask,             XK_m,      incnmaster,     {.i = -1 } },
 	{ MODKEY,                       XK_m,      setmfact,       {.f = -0.05} },
 	{ MODKEY,                       XK_i,      setmfact,       {.f = +0.05} },
-	{ MODKEY|ShiftMask,		XK_k,      shiftboth,      { .i = -1 }	},
-	{ MODKEY|ControlMask,           XK_k,      shiftswaptags,  { .i = -1 }	},
-	{ MODKEY|ControlMask,   	XK_j,      shiftswaptags,  { .i = +1 }	},
-	{ MODKEY|ShiftMask,             XK_j,      shiftboth,      { .i = +1 }	},
+	{ MODKEY|ShiftMask,		XK_l,      shiftboth,      { .i = -1 }	},
+	{ MODKEY|ControlMask,           XK_l,      shiftswaptags,  { .i = -1 }	},
+	{ MODKEY|ControlMask,   	XK_u,      shiftswaptags,  { .i = +1 }	},
+	{ MODKEY|ShiftMask,             XK_u,      shiftboth,      { .i = +1 }	},
 	{ MODKEY|ALTKEY,                XK_z,      incrgaps,       {.i = +1 } },
 	{ MODKEY|ALTKEY,                XK_x,      incrgaps,       {.i = -1 } },
 /*	{ MODKEY|ALTKEY|ShiftMask,      XK_m,      incrogaps,      {.i = +1 } },
@@ -160,16 +162,16 @@ static Key keys[] = {
 	{ MODKEY|ControlMask,           XK_Left,   incrohgaps,     {.i = -1 } },
 	{ MODKEY|ControlMask,           XK_Right,  incrovgaps,     {.i = +1 } },
 	{ MODKEY|ControlMask,           XK_Left,   incrovgaps,     {.i = -1 } },*/
-//	{ MODKEY|ShiftMask,             XK_Return, zoom,           {0} },
+	{ MODKEY,                       XK_space, zoom,           {0} },
 	{ MODKEY,                       XK_Tab,    view,           {0} },
 //	{ MODKEY|ShiftMask,             XK_c,      killclient,     {0} },
 	{ MODKEY,                       XK_q,      killclient,     {0} },
-	{ MODKEY|ShiftMask,             XK_t,      setlayout,      {.v = &layouts[0]} },//Tiling
-	{ MODKEY|ShiftMask,             XK_f,      setlayout,      {.v = &layouts[1]} },//floating
+	{ MODKEY|ControlMask,           XK_t,      setlayout,      {.v = &layouts[0]} },//Tiling
+	{ MODKEY|ControlMask,           XK_f,      setlayout,      {.v = &layouts[1]} },//floating
 	{ MODKEY|ControlMask,           XK_m,      setlayout,      {.v = &layouts[2]} },//monacle
 	{ MODKEY,        		XK_f,      fullscreen,     {0} },
-	{ MODKEY,                       XK_space,  setlayout,      {0} },
-	{ MODKEY|ALTKEY,                XK_space,  togglefloating, {0} },
+	{ MODKEY|ShiftMask,             XK_space,  setlayout,      {0} },
+	{ MODKEY|ShiftMask,             XK_f,      togglefloating, {0} },
 	{ MODKEY|ALTKEY,                XK_f,      togglefullscr,  {0} },
 	{ MODKEY,                       XK_0,      view,           {.ui = ~0 } },
 	{ MODKEY|ShiftMask,             XK_0,      tag,            {.ui = ~0 } },
@@ -192,12 +194,12 @@ static Key keys[] = {
 	//{ MODKEY|ShiftMask,             XK_Return, spawn,          SHCMDZSH("kitty nnn -a -c -P p") },//{.v = termfm } },
 	//{ MODKEY|ControlMask,           XK_Return, spawn,          SHCMDZSH("kitty nnn -a -e -P p") }, //{.v = termfmedit } },
 	{ MODKEY|ShiftMask,             XK_Return, spawn,          SHCMDZSH("alacritty -e nnn -a -c -P b") },//{.v = termfm } },
-	{ MODKEY|ControlMask,           XK_Return, spawn,          SHCMDZSH("alacritty nnn -a -e -P b") }, //{.v = termfmedit } },
-	{ MODKEY,                       XK_w,      spawn,          SHCMD("firefox") },
+	{ MODKEY|ShiftMask|ControlMask, XK_Return, spawn,          SHCMDZSH("alacritty nnn -a -e") }, //{.v = termfmedit } },
+	{ MODKEY,                       XK_w,      spawn,          SHCMDZSH("$BROWSER") },
 	//{ 0|ControlMask|ALTKEY,         XK_Delete, spawn,          SHCMD("kitty btop") }, 
         //{ MODKEY|ShiftMask,             XK_m,      spawn,          SHCMDZSH("kitty -T cmus screen -q -r -D cmus || screen -S cmus $(which --skip-alias cmus)") },	
 	{ 0|ControlMask|ALTKEY,         XK_Delete, spawn,          SHCMD("alacritty -e btop") }, 
-        { MODKEY|ShiftMask,             XK_m,      spawn,          SHCMDZSH("alacritty -t cmus -e screen -q -r -D cmus || screen -S cmus $(which --skip-alias cmus)") },	
+        { MODKEY|ALTKEY,                XK_m,      spawn,          SHCMDZSH("alacritty -t cmus -e screen -q -r -D cmus || screen -S cmus $(which --skip-alias cmus)") },	
 	{ 0,                            XK_Print,  spawn,	   SHCMD("spectacle --fullscreen --background") },
 	{ MODKEY,                       XK_s,      spawn,          SHCMD("spectacle --region --background") },
 	{ MODKEY|ShiftMask,             XK_s,      spawn,          SHCMD("spectacle --region --background --copy-image") },
@@ -207,7 +209,28 @@ static Key keys[] = {
 	{ MODKEY|ShiftMask,             XK_c,      spawn,          SHCMD("kill -s USR1 $(pidof deadd-notification-center)") },
 	{ MODKEY|ShiftMask,             XK_d,      spawn,          SHCMD("keepmenu") },//{.v = keepmenu } },
         { MODKEY|ControlMask,           XK_v,      spawn,          SHCMD("copyq toggle") },//copyq	
+        { MODKEY|ControlMask,           XK_e,      spawn,          SHCMD("easyeffects") },//easyeffects	
+        { MODKEY|ALTKEY,                XK_h,      spawn,          SHCMD("groff -mom ~/.dwm/help/dwm-help.mom -Tpdf | zathura -") },//help menu	
 
+	
+        { 0, XF86XK_Mail,               spawn,          SHCMD("thunderbird") },	
+        { 0, XF86XK_HomePage,           spawn,          SHCMDZSH("$BROWSER") },	
+        { 0, XF86XK_Forward,            spawn,          SHCMD("brave") },	
+        { 0, XF86XK_Back,               spawn,          SHCMD("tabbed -c surf -e") },	
+        { 0, XF86XK_Explorer,           spawn,          SHCMD("thunar") },	
+        { 0, XF86XK_Sleep,              spawn,          SHCMD("systemctl suspend") },	
+        { 0, XF86XK_WakeUp,             spawn,          SHCMD("sysact") },
+	{ 0, XF86XK_PowerOff,		spawn,		SHCMD("sysact") },
+	{ 0, XF86XK_Calculator,		spawn,		SHCMD("kcalc") },
+	{ 0, XF86XK_Favorites,		spawn,		SHCMD("panther_launcher") },
+	{ 0, XF86XK_Reload,		quit,        {0} },
+        
+	{ 0, XF86XK_MonBrightnessUp,	spawn,		SHCMD("monbrightcontrol 1 15") },
+	{ 0, XF86XK_MonBrightnessDown,	spawn,		SHCMD("monbrightcontrol 1 -15") },
+	{ 0|ControlMask, XF86XK_MonBrightnessUp,	spawn,		SHCMD("monbrightcontrol 2 15") },
+	{ 0|ControlMask, XF86XK_MonBrightnessDown,	spawn,		SHCMD("monbrightcontrol 2 -15") },
+	{ 0|ALTKEY, XF86XK_MonBrightnessUp,	spawn,		SHCMD("monbrightcontrol 3 15") },
+	{ 0|ALTKEY, XF86XK_MonBrightnessDown,	spawn,		SHCMD("monbrightcontrol 3 -15") },
 
 	{ 0, XF86XK_AudioMute,		spawn,		SHCMD("pamixer -t; kill -44 $(pidof dwmblocks)") },
 	{ 0, XF86XK_AudioRaiseVolume,	spawn,		SHCMD("pamixer -i 3; kill -44 $(pidof dwmblocks)") },
@@ -228,7 +251,7 @@ static Key keys[] = {
 	TAGKEYS(                        XK_7,                      6)
 	TAGKEYS(                        XK_8,                      7)
 	TAGKEYS(                        XK_9,                      8)
-	{ MODKEY|ShiftMask,             XK_BackSpace, quit,        {0} },
+	{ MODKEY|ControlMask,           XK_BackSpace, quit,        {0} },
 };
 
 /* button definitions */
