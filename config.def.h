@@ -213,7 +213,7 @@ static Key keys[] = {
         { MODKEY|ALTKEY,                XK_h,      spawn,          SHCMD("groff -mom ~/.dwm/help/dwm-help.mom -Tpdf | zathura -") },//help menu	
 
 	
-        { 0, XF86XK_AudioMicMute,               spawn,          SHCMD("amixer set Capture toggle; kill -46 $(pidof dwmblocks)") },	
+        { 0, XF86XK_AudioMicMute,               spawn,          SHCMD("amixer set Capture toggle; kill -47 $(pidof dwmblocks)") },	
        /* { 0, XF86XK_Launch5,               spawn,          SHCMD("") },	
         { 0, XF86XK_Launch6,               spawn,          SHCMD("") },	
         { 0, XF86XK_Launch7,               spawn,          SHCMD("") },	
