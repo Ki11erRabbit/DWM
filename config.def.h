@@ -16,7 +16,7 @@ static const unsigned int gappov    = 10;       /* vert outer gap between window
 static const int smartgaps          = 0;        /* 1 means no outer gap when there is only one window */
 static const int showbar            = 1;        /* 0 means no bar */
 static const int topbar             = 1;        /* 0 means bottom bar */
-static const char *fonts[]          = { "LigalexMono:size=9",/*"IBMPlexMono-Regular:size=10",*/ /*"JoyPixels*/"twemoji:pixelsize=9:antialias=true:autohint=true" };
+static const char *fonts[]          = { "LigalexMono:size=9",/*"IBMPlexMono-Regular:size=9",*/ /*"JoyPixels*/"twemoji:pixelsize=9:antialias=true:autohint=true" };
 static const char dmenufont[]      = "LigalexMono:size=9";
 static const char col_gray1[]       = "#222222";
 static const char col_gray2[]       = "#444444";
@@ -53,6 +53,7 @@ static const char *const autostart[] = {
 	"flameshot", NULL,
 	"dwmblocks", NULL,
 	"lock", NULL,
+	"sxhkd", NULL,
 
 	NULL /* terminate */
 };
@@ -75,7 +76,8 @@ static const Rule rules[] = {
 	{ "handlr",  NULL,     NULL,           0,         0,          1,           0,        -1,      50,50,500,500,     4  },
 	{ "Discord", NULL,     NULL,           1 << 8,    0,          0,          -1,        -1,      50,50,500,500,     4  },
 	{ "Panther", NULL,     NULL,           0,         1,          0,          -1,        -1,      1900,1060,500,500, 2  },
-	{ "Black Mesa - OpenGL", NULL, NULL,   0,         0,          0,          -1,        -1,      0,0,1920,1080,     0  },
+	{ "bms_linux", NULL, NULL,             0,         0,          0,          -1,        -1,      0,0,1920,1080,     0  },
+	{ "Picture-in-Picture", "Picture-in-Picture", "Picture-in-Picture",0,0,       0,          -1,        -1,      50,50,500,500,     4  },
 	{ NULL,      NULL,   "spterm",         SPTAG(0),  1,         -1,          -1,         0,      240,1100,1400,800,   8  },
         { NULL,      NULL,   "calcterm",       SPTAG(1),  1,         -1,          -1,         0,      710,225,500,250,   4  },
         { NULL,     "keepassxc", NULL,         SPTAG(2),  0,         -1,          -1,        -1,      50,50,500,500,     2  },
@@ -193,9 +195,10 @@ static Key keys[] = {
 	{ MODKEY,        		XK_r,      spawn,          SHCMD("thunar") },
 	//{ MODKEY|ShiftMask,             XK_Return, spawn,          SHCMDZSH("kitty nnn -a -c -P p") },//{.v = termfm } },
 	//{ MODKEY|ControlMask,           XK_Return, spawn,          SHCMDZSH("kitty nnn -a -e -P p") }, //{.v = termfmedit } },
-	{ MODKEY|ShiftMask,             XK_Return, spawn,          SHCMDZSH("alacritty -e nnn -a -c -P b") },//{.v = termfm } },
+	{ MODKEY|ShiftMask,             XK_Return, spawn,          SHCMDZSH("alacritty -e nnn -a -c") },//{.v = termfm } },
+	{ MODKEY|ShiftMask|ALTKEY,      XK_Return, spawn,          SHCMDZSH("alacritty -e nnn -a -c -P b") },//{.v = termfm } },
 	{ MODKEY|ShiftMask|ControlMask, XK_Return, spawn,          SHCMDZSH("alacritty nnn -a -e") }, //{.v = termfmedit } },
-	{ MODKEY,                       XK_w,      spawn,          SHCMDZSH("$BROWSER") },
+	//{ MODKEY,                       XK_w,      spawn,          SHCMDZSH("$BROWSER") },
 	//{ 0|ControlMask|ALTKEY,         XK_Delete, spawn,          SHCMD("kitty btop") }, 
         //{ MODKEY|ShiftMask,             XK_m,      spawn,          SHCMDZSH("kitty -T cmus screen -q -r -D cmus || screen -S cmus $(which --skip-alias cmus)") },	
 	{ 0|ControlMask|ALTKEY,         XK_Delete, spawn,          SHCMD("alacritty -e btop") }, 
@@ -204,13 +207,14 @@ static Key keys[] = {
 	{ MODKEY,                       XK_s,      spawn,          SHCMD("spectacle --region --background") },
 	{ MODKEY|ShiftMask,             XK_s,      spawn,          SHCMD("spectacle --region --background --copy-image") },
 	{ MODKEY|ALTKEY,                XK_s,      spawn,          SHCMD("flameshot gui") },
-	{ MODKEY,                       XK_v,      spawn,          SHCMD("copyq menu") },
+	//{ MODKEY,                       XK_v,      spawn,          SHCMD("copyq menu") },
 	{ MODKEY,                       XK_h,      spawn,          SHCMD("panther_launcher") },
 	{ MODKEY|ShiftMask,             XK_c,      spawn,          SHCMD("kill -s USR1 $(pidof deadd-notification-center)") },
 	{ MODKEY|ShiftMask,             XK_d,      spawn,          SHCMD("keepmenu") },//{.v = keepmenu } },
         { MODKEY|ControlMask,           XK_v,      spawn,          SHCMD("copyq toggle") },//copyq	
-        { MODKEY|ControlMask,           XK_e,      spawn,          SHCMD("easyeffects") },//easyeffects	
+        //{ MODKEY|ControlMask,           XK_e,      spawn,          SHCMD("easyeffects") },//easyeffects	
         { MODKEY|ALTKEY,                XK_h,      spawn,          SHCMD("groff -mom ~/.dwm/help/dwm-help.mom -Tpdf | zathura -") },//help menu	
+	//{ MODKEY,                       XK_p,      spawn,          SHCMD("cabl") },
 
 	
         { 0, XF86XK_AudioMicMute,               spawn,          SHCMD("amixer set Capture toggle; kill -47 $(pidof dwmblocks)") },	
@@ -226,7 +230,7 @@ static Key keys[] = {
         { 0, XF86XK_TouchpadOff,               spawn,          SHCMD("") },*/	
         
 	{ 0, XF86XK_Mail,               spawn,          SHCMD("thunderbird") },	
-        { 0, XF86XK_HomePage,           spawn,          SHCMDZSH("$BROWSER") },	
+//        { 0, XF86XK_HomePage,           spawn,          SHCMDZSH("$BROWSER") },	
         { 0, XF86XK_Forward,            spawn,          SHCMD("brave") },	
         { 0, XF86XK_Back,               spawn,          SHCMD("tabbed -c surf -e") },	
         { 0, XF86XK_Explorer,           spawn,          SHCMD("thunar") },	
