@@ -260,6 +260,10 @@ static Key keys[] = {
 	{ 0, XF86XK_AudioForward,	spawn,		SHCMD("playerctl position +10; kill -52 $(pidof dwmblocks)") },
 	
 	//Mouse Control
+#define Button6 6
+#define Button7 7
+#define Button8 8
+#define Button9 9
 	{ MODKEY|ShiftMask,             Button6,  focusmon,       {.i = -1 } },
 	{ MODKEY|ShiftMask,             Button7, focusmon,       {.i = +1 } },
 	{ MODKEY,                       Button6,  tagmon,         {.i = -1 } },
