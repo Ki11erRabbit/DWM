@@ -258,6 +258,15 @@ static Key keys[] = {
 	{ 0, XF86XK_AudioStop,		spawn,		SHCMD("playerctl stop; kill -52 $(pidof dwmblocks)") },
 	{ 0, XF86XK_AudioRewind,	spawn,		SHCMD("playerctl position -10; kill -52 $(pidof dwmblocks)") },
 	{ 0, XF86XK_AudioForward,	spawn,		SHCMD("playerctl position +10; kill -52 $(pidof dwmblocks)") },
+	
+	//Mouse Control
+	{ MODKEY|ShiftMask,             Button6,  focusmon,       {.i = -1 } },
+	{ MODKEY|ShiftMask,             Button7, focusmon,       {.i = +1 } },
+	{ MODKEY,                       Button6,  tagmon,         {.i = -1 } },
+	{ MODKEY,                       Button7, tagmon,         {.i = +1 } },
+	{ MODKEY|ControlMask,  		Button7,	shiftview,         { .i = +1 } },
+	{ MODKEY|ControlMask,  		Button6,	shiftview,         { .i = -1 } },
+	
 	TAGKEYS(                        XK_1,                      0)
 	TAGKEYS(                        XK_2,                      1)
 	TAGKEYS(                        XK_3,                      2)
