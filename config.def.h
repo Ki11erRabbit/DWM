@@ -186,7 +186,7 @@ static Key keys[] = {
         { MODKEY,                       XK_c,      togglescratch,  {.ui = 1 } },//calculator
         { MODKEY|ControlMask,           XK_x,      togglescratch,  {.ui = 2 } },//keepassxc	
 	//******** System
-	{ MODKEY|ControlMask,           XK_s,      spawn,          SHCMD("systemctl suspend") },//suspend
+	//{ MODKEY|ControlMask,           XK_s,      spawn,          SHCMD("systemctl suspend") },//suspend
         { MODKEY,                    XK_BackSpace, spawn,          SHCMD("betterlockscreen -l") },  //lock
 	{ MODKEY|ControlMask,           XK_q,      spawn,          SHCMD("sysact") },         //logout
 	//******** Programs
@@ -204,9 +204,9 @@ static Key keys[] = {
 	{ 0|ControlMask|ALTKEY,         XK_Delete, spawn,          SHCMD("alacritty -e btop") }, 
         { MODKEY|ALTKEY,                XK_m,      spawn,          SHCMDZSH("alacritty -t cmus -e screen -q -r -D cmus || screen -S cmus $(which --skip-alias cmus)") },	
 	{ 0,                            XK_Print,  spawn,	   SHCMD("spectacle --fullscreen --background") },
-	{ MODKEY,                       XK_s,      spawn,          SHCMD("spectacle --region --background") },
-	{ MODKEY|ShiftMask,             XK_s,      spawn,          SHCMD("spectacle --region --background --copy-image") },
-	{ MODKEY|ALTKEY,                XK_s,      spawn,          SHCMD("flameshot gui") },
+	//{ MODKEY,                       XK_s,      spawn,          SHCMD("spectacle --region --background") },
+	//{ MODKEY|ShiftMask,             XK_s,      spawn,          SHCMD("spectacle --region --background --copy-image") },
+	//{ MODKEY|ALTKEY,                XK_s,      spawn,          SHCMD("flameshot gui") },
 	//{ MODKEY,                       XK_v,      spawn,          SHCMD("copyq menu") },
 	{ MODKEY,                       XK_h,      spawn,          SHCMD("panther_launcher") },
 	{ MODKEY|ShiftMask,             XK_c,      spawn,          SHCMD("kill -s USR1 $(pidof deadd-notification-center)") },
