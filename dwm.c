@@ -466,6 +466,10 @@ applysizehints(Client *c, int *x, int *y, int *w, int *h, int interact)
 	int baseismin;
 	Monitor *m = c->mon;
 
+	// return 1 if layout is monocle
+	if (&monocle == c->mon->lt[c->mon->sellt]->arrange)
+		return 1;
+
 	/* set minimum possible */
 	*w = MAX(1, *w);
 	*h = MAX(1, *h);
@@ -1697,6 +1701,11 @@ resizeclient(Client *c, int x, int y, int w, int h)
 	c->oldh = c->h; c->h = wc.height = h;
 	if (c->isfloating && c->hasfloatbw && !c->isfullscreen)
 		wc.border_width = c->floatborderpx;
+	else if ((&monocle == c->mon->lt[c->mon->sellt]->arrange) && (!c->isfloating)) {
+		wc.border_width = 0;
+		c->w = wc.width += c->bw * 2;
+		c->h = wc.height += c->bw * 2;
+	}
 	else
 		wc.border_width = c->bw;
 	XConfigureWindow(dpy, c->win, CWX|CWY|CWWidth|CWHeight|CWBorderWidth, &wc);
