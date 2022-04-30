@@ -16,8 +16,8 @@ static const unsigned int gappov    = 10;       /* vert outer gap between window
 static const int smartgaps          = 0;        /* 1 means no outer gap when there is only one window */
 static int showbar            = 1;        /* 0 means no bar */
 static int topbar             = 1;        /* 0 means bottom bar */
-static const char *fonts[]          = { "LigalexMono:size=9","twemoji:pixelsize=9:antialias=true:autohint=true","Fira Code Medium:size=9", "fontawesome-regular:size=9","monospace:size=9","Font Awesome 6 Free Solid:size=9"/*"IBMPlexMono-Regular:pixelsize=9"*/ /*"JoyPixels*/};
-static const char dmenufont[]      = "LigalexMono:size=9";
+static const char *fonts[]          = { "IBM Plex Mono:size=9","twemoji:pixelsize=9:antialias=true:autohint=true","Fira Code Medium:size=9", "fontawesome-regular:size=9","monospace:size=9","Font Awesome 6 Free Solid:size=9"/*"IBMPlexMono-Regular:pixelsize=9"*/ /*"JoyPixels*/};
+static const char dmenufont[]      = "IBM Plex Mono:size=9";
 /*static const char col_gray1[]       = "#222222";
 static const char col_gray2[]       = "#444444";
 static const char col_gray3[]       = "#bbbbbb";
@@ -274,12 +274,12 @@ static Key keys[] = {
 	{ 0, XF86XK_Favorites,		spawn,		SHCMD("panther_launcher") },
 	{ 0, XF86XK_Reload,		quit,        {0} },
         
-	{ 0, XF86XK_MonBrightnessUp,	spawn,		SHCMD("monbrightcontrol 1 15") },
+/*	{ 0, XF86XK_MonBrightnessUp,	spawn,		SHCMD("monbrightcontrol 1 15") },
 	{ 0, XF86XK_MonBrightnessDown,	spawn,		SHCMD("monbrightcontrol 1 -15") },
 	{ 0|ControlMask, XF86XK_MonBrightnessUp,	spawn,		SHCMD("monbrightcontrol 2 15") },
 	{ 0|ControlMask, XF86XK_MonBrightnessDown,	spawn,		SHCMD("monbrightcontrol 2 -15") },
 	{ 0|ALTKEY, XF86XK_MonBrightnessUp,	spawn,		SHCMD("monbrightcontrol 3 15") },
-	{ 0|ALTKEY, XF86XK_MonBrightnessDown,	spawn,		SHCMD("monbrightcontrol 3 -15") },
+	{ 0|ALTKEY, XF86XK_MonBrightnessDown,	spawn,		SHCMD("monbrightcontrol 3 -15") },*/
 
 	{ 0, XF86XK_AudioMute,		spawn,		SHCMD("pamixer -t; kill -44 $(pidof dwmblocks)") },
 	{ 0, XF86XK_AudioRaiseVolume,	spawn,		SHCMD("pamixer -i 3; kill -44 $(pidof dwmblocks)") },
