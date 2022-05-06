@@ -44,6 +44,7 @@ install: all
 	sed "s/VERSION/${VERSION}/g" < dwm.1 > ${DESTDIR}${MANPREFIX}/man1/dwm.1
 	chmod 644 ${DESTDIR}${MANPREFIX}/man1/dwm.1
 	rm -v config.h
+	cp -f startdwm ${DESTDIR}${PREFIX}/bin
 
 
 uninstall:
