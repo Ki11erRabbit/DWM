@@ -35,6 +35,7 @@ export TERMINAL=alacritty &
 wmname LG3D &
 
 touchegg &
+mpv ~/.dwm/startup.wav &
 
 ###---Wallpaper---###
 feh --bg-fill /home/ki11errabbit/Pictures/Wallpapers/80075693_p0\ Crop\ Upscale.png
