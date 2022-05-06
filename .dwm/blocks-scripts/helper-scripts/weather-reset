@@ -1,0 +1,5 @@
+#!/bin/sh
+
+kill -45 $(pidof dwmblocks)
+exit
+

@@ -1,0 +1,38 @@
+#!/bin/bash
+# Pulls stock list from a file at home directory called stockslist that stores each stock symbol
+# on a new line.
+linenum=$(cat /tmp/stocknum 2> /dev/null) 
+numlines=$(wc -l ~/stockslist | awk '{print $1}')
+
+if [ "$linenum" -ge "$numlines" ]; then 
+	linenum=0
+fi
+
+linenum=$(( $linenum + 1 ))
+
+name=$(sed -n ${linenum}p ~/stockslist)
+echo $linenum > /tmp/stocknum
+
+stonks -w $name > /tmp/stockchart
+#notify-send "test" "$linenum  $name"
+
+case $BLOCK_BUTTON in
+	1) setsid -f $TERMINAL -e less -Srf /tmp/stockchart
+	   linenum=$(( $linenum - 1 ))
+	   ;;
+	2) linenum=$(( $linenum + 0 ));;
+	3) notify-send "📈 Stocks " "\- Shows Stocks from a list every 10 minutes.
+- Middle click to go to next stock.
+- Left click opens 1 week view in stonks."
+linenum=$(( $linenum - 1 ));;
+	6) $TERMINAL -e nvim "$0" ;;
+esac
+
+posneg=$(cat /tmp/stockchart | awk 'FNR==2{ print }' | awk '{ print $8 }' | sed $'s/\e\\[[0-9;:]*[a-zA-Z]//g' | cut -c1-2 | sed 's/.//g')
+if [ "$posneg" -lt 0 ]; then
+	icon="📉"
+else
+#icon="📈"
+fi
+output=$(cat /tmp/stockchart | awk 'FNR==2{ print }' | awk '{ print $2 " $"  $4 }' | sed $'s/\e\\[[0-9;:]*[a-zA-Z]//g')
+echo "$icon $output"

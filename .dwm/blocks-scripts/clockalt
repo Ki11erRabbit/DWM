@@ -1,0 +1,24 @@
+#!/bin/sh
+
+DAY=$(date '+%d')
+BDAY="<b>$day<\\b>"
+
+case $BLOCK_BUTTON in 
+    1) setsid -f $TERMINAL -e calcurse ;;   # syncs via caldav then launches calcurses
+    3) notify-send "$(date '+%d %B %Y')" "$(cal | sed '1d'| sed 's/ *$//' | sed 's/$/ /' | sed 's/ \([0-9] \)/0\1/g' | sed 's/$/ /' | sed 's/   /__ /g')";;	 # simple calendar
+    2) notify-send "Clock" "\- Left click to access calcurses." ;;
+    6) $TERMINAL -e nvim $0 ;;
+esac
+
+today=$(date '+%b %d (%a) %I:%M%p')
+temp=$(date '+%m %d')
+
+if [ temp = "09 09" ] ; then 
+   today="Cirno ⑨ ($(date '+%a) %I:%M%p')"
+elif [ temp = "04 28" ] ; then
+   today="🎁🎉🥳 $today"
+fi
+    
+
+echo $today
+    

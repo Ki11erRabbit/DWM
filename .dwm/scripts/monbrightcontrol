@@ -1,0 +1,15 @@
+#!/bin/sh
+
+# 
+# needs to have sudoers set to <username> ALL = (root) NOPASSWD: /bin/ddccontrol
+#
+
+
+
+case $1 in
+	1) ddccontrol -r 0x10 -W $2 dev:/dev/i2c-8 > /dev/null
+	   ddccontrol -r 0x10 -W $2 dev:/dev/i2c-6 > /dev/null;; 
+	2) ddccontrol -r 0x10 -W $2 dev:/dev/i2c-8 > /dev/null;;
+	3) ddccontrol -r 0x10 -W $2 dev:/dev/i2c-6 > /dev/null;;
+esac
+exit

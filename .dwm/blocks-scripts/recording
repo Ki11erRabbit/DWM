@@ -1,0 +1,11 @@
+#!/bin/sh
+
+
+
+if [[ $(pidof obs-ffmpeg-mux) -ne 0 ]]; then
+	#echo "⏺️"
+	cat /tmp/recordingicon 2>/dev/null
+else
+	cat /tmp/recordingicon 2>/dev/null
+fi
+

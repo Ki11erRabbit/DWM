@@ -1,0 +1,6 @@
+#!/bin/sh
+
+kill -52 $(pidof dwmblocks) 
+
+
+

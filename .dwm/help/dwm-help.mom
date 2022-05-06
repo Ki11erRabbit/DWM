@@ -1,0 +1,114 @@
+.de LI
+.LIST
+.SHIFT_LIST 10p
+..
+.PARA_SPACE 1m
+.TITLE "\s+(10A Guide to DWM\s0"
+.AUTHOR "\s+5Ki11erRabbit\s0"
+.DOCTYPE DEFAULT
+.COPYSTYLE FINAL
+.PRINTSTYLE TYPESET
+.PT_SIZE 12
+.START
+.HEADING 1 "Welcome!"
+You may have noticed already but the controls are not quite Vim based. However, they very much are, it is just that I use a Colemak DH keyboard. So while keys may not make sense on QWERTY, it makes sense in the context of Colemak DH.
+To open this guide, press \f(CWMod+Alt+h\fP at any time
+.HEADING 1 "Keybindings"
+First of all, the modkey is defined as being the Super Key or the Windows Key. The modkey will be displayed as \f(CWMod+xyz\fP. If the letter in the key is capitalized then that means the shift key needs to be pressed as well.
+.HEADING 2 "Basic Keys"
+.LI
+.ITEM 
+\f(CWMod+m/l\fP \(en Changes the width of the Main window (usually on the left side).
+.ITEM 
+\f(CWMod+n/e\fP \(en changes the active window down/up the window stack, turning the window stack into a vector
+.ITEM 
+\f(CWMod+N/E\fP \(en moves the currently active window up and down the stack, allowing you to reorder the windows.
+.ITEM 
+\f(CWMod+M/I\fP \(en hard to explain but the best I can is that it changes how the windows are displayed.
+.ITEM 
+\f(CWMod+l/u\fP \(en changes the current selected desktop tag decreasing/increasing it.
+.ITEM 
+\f(CWMod+L/U\fP \(en takes the current active with you when you change the current desktop tag.
+.ITEM 
+\f(CWMod+q\fP \(en closes the currently active window
+.ITEM 
+\f(CWMod+t/b\fP \(en goes to the \f[B]T\fPop/\f[B]B\fPottom of the stack or to the Main/last window\c
+.FOOTNOTE
+Holding \f(CWshift\fP will allow you to move windows to those locations in the stack
+.FOOTNOTE OFF
+.ITEM 
+\f(CWMod+a/z\fP \(en Changes the currently active window to the 2nd/3rd window*
+.ITEM 
+\f(CWMod+Alt+z/x\fP \(en Increases/Decreases the gaps around the windows
+.ITEM 
+\f(CWMod+g\fP \(en Toggles on and off the gaps around the windows. Including \f(CWshift\fP resets the gaps.
+.ITEM 
+\f(CWMod+space\fP \(en Moves the current active window to the be the Main window (called "zoom" for some reason)
+.ITEM 
+\f(CWMod+comma/period\fP \(en moves the cursor to the left/right monitor's main window or it wraps around to the next available monitor.
+.ITEM 
+\f(CWMod+</>\fP \(en Or \f(CWMod+COMMA/PERIOD\fP moves the current active window to the main window on the left/right monitor.
+.LIST OFF
+.HEADING 2 "Launching Programs"
+.LI
+.ITEM 
+\f(CWMod+d\fP \(en launches dmenu
+.ITEM 
+\f(CWMod+enter\fP \(en launches the terminal, currently set to Alacritty
+.ITEM 
+\f(CWMod+ENTER\fP \(en launches the terminal file manager NNN with the \f(CW-c\fP flag and \f(CWpreview-tabbed\fP pluging. Including \f(CWcontrol\fP launches NNN in edit mode.
+.ITEM 
+\f(CWMod+w\fP \(en launches the default browser according to the ZSH environment variable
+.ITEM 
+\f(CWMod+r\fP \(en launches Thunar (Xfce GUI file manager)
+.ITEM 
+\f(CWMod+Ctrl+e\fP \(en launches Easyeffects for audio manipulation.
+.ITEM 
+\f(CWMod+s\fP \(en launches Spectacle to take screenshots adding \f(CWshift\fP also adds the screenshot to the clipboard. Adding \f(CWAlt\fP launches Flameshot instead so that you can also annotate the screenshot.
+.ITEM 
+\f(CWMod+h\fP \(en opens panther_launcher for accessing .desktop programs.
+.ITEM 
+\f(CWMod+c\fP \(en opens R in a scratchpad for terminal math.
+.ITEM 
+\f(CWCtrl+Alt+enter\fP \(en opens a terminal scratchpad
+.ITEM 
+\f(CWMod+Alt+m\fP \(en opens CMUS in a floating window (must first be started in bash, otherwise it doesn't work)
+.ITEM 
+\f(CWMod+D\fP \(en opens keepmenu, a dmenu frontend for keepass2
+.ITEM 
+\f(CWMod+Ctrl+x\fP \(en opens keepassxc as a non-floating scratchpad window if keepmenu doesn't work
+.LIST OFF
+.HEADING 2 "System Hotkeys"
+.LI
+.ITEM 
+\f(CWMod+Ctrl+q\fP \(en opens sysact, a script that uses dmenu to perform several different system actions (refreshing dwm doesn't work atm)
+.ITEM 
+\f(CWMod+Ctrl+backspace\fP \(en kills dwm which will refresh dwm. Use sysact to leave dwm or shutoff.
+.ITEM 
+\f(CWMod+Ctrl+s\fP \(en suspends the system and launches the lockscreen
+.ITEM 
+\f(CWMod+backspace\fP \(en launches betterlockscreen to lock the screen.
+.ITEM 
+\f(CWCtrl+Alt+delete\fP \(en launches btop in alacritty for system monitoring.
+.ITEM 
+\f(CWMod+C\fP \(en opens the deadd-notification-center to view notifications
+.ITEM 
+\f(CWMod+v\fP \(en opens the copyq context menu over the current position of the cursor. Adding \f(CWcontrol\fP opens the copyq clipboard.
+.LIST OFF
+.HEADING 2 "Window Layouts"
+.LI
+.ITEM 
+\f(CWMod+Ctrl+t\fP \(en changes the to the default tiling layout indicated at the top with a \f(CW[]=\fP
+.ITEM 
+\f(CWMod+Ctrl+f\fP \(en changes the layout to the floating window layout indicated with \f(CW><>\fP 
+.ITEM 
+\f(CWMod+Ctrl+m\fP \(en changes the layout to the monacle layout, indicated by \f(CW[M]\fP with M being the current numbered window.
+.ITEM 
+\f(CWMod+f\fP \(en changes the layout to the fullscreen layout, which hides the bar and sets the window to take up fullscreen
+.ITEM 
+\f(CWMod+F\fP \(en sets the currently active window to be a floating window. \f(CWMod+middlemouse\fP does the same thing
+.ITEM 
+\f(CWMod+rightmouse\fP \(en holding this down sets a window as a floating window and allows you to resize the floating window.
+.ITEM 
+\f(CWMod+leftmouse\fP \(en holding this down allows you to drag floating windows around.
+.LIST OFF

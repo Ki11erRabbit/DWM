@@ -1,0 +1,13 @@
+#!/bin/sh
+
+
+while true ; do
+	if [[ $(pactl list short | grep RUNNING | awk '/input/ {print $2}' | wc -c) -ne 0 ]]; then
+		kill -47 $(pidof dwmblocks) >/dev/null
+		sleep 0.5
+	else
+		kill -47 $(pidof dwmblocks) >/dev/null
+		sleep 0.5
+	fi
+done
+
