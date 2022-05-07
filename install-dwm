@@ -2,6 +2,14 @@
 
 # Make sure to run this script not as root as the script will ask for your password when it needs it
 
+
+# installs DWM 
+sudo make install
+
+#moves scripts for dwm and dwmblocks
 cp -fv .dwm ~/
 cp -fv scripts ~/.local/bin/
+
+#installs dwmblocks-async
+cd dwmblocks-async
 sudo make install
