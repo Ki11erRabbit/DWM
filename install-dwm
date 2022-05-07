@@ -7,8 +7,8 @@
 sudo make install
 
 #moves scripts for dwm and dwmblocks
-cp -fv .dwm ~/
-cp -fv scripts ~/.local/bin/
+cp -rfv .dwm ~/
+cp -rfv scripts/bin/ ~/.local/bin/
 
 #installs dwmblocks-async
 cd dwmblocks-async

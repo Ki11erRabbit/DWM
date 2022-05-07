@@ -1,7 +1,0 @@
-#!/bin/sh
-
-
-output=$(free -h | awk '/^Mem/ { print $3 }' | sed s/Gi//g)
-
-echo " $output Gi"
-
