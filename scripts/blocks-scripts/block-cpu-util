@@ -1,0 +1,5 @@
+#!/bin/sh
+cpu_idle=$(top -b -n 1 | grep Cpu | awk '{print $8}'|cut -f 1 -d ".")
+output="`expr 100 - $cpu_idle`"
+
+echo " $output%"

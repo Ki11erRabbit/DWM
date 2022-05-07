@@ -1,0 +1,49 @@
+#!/bin/sh
+# Code inspired by content found at http://v3gard.com/2011/01/getting-cmus-to-cooperate-with-conky/
+
+
+#sigself(){ kill -52 $(pidof dwmblocks); }
+
+output=""
+#pidof -x music-helper >/dev/null || music-helper >/dev/null  &
+
+
+artist=`cmus-remote -Q | 
+	grep --text '^tag artist' | 
+	sed '/^tag artistsort/d' | 
+	awk '{gsub("tag artist ", "");print}'`
+title=`cmus-remote -Q  | 
+	grep --text '^tag title' | 
+	sed -e 's/tag title //' |
+	awk '{gsub("tag title ", "");print}'`
+
+
+if [ $(cmus-remote -Q | awk '/status/ {print $2}') = "paused" ] ; then    
+	output="⏸ $title -  $artist";
+elif [ $(cmus-remote -Q | awk '/status/ {print $2}') = "playing" ] ; then	
+	output="$title -  $artist" ;
+elif [ $(cmus-remote -Q | awk '/status/ {print $2}') = "stopped" ] ; then	
+	output="" 
+fi
+
+case $BLOCK_BUTTON in
+    1) setsid -f kitty -T cmus screen -q -r -D cmus || screen -S cmus $(which --skip-alias cmus) &;;
+    2) cmus-remote -u ;;
+    3) notify-send "🎵 Music module" "\- Shows cmus song playing.
+- ⏸  when paused.
+- Left click opens cmus.
+- Middle click play/pauses.
+- Scroll changes player vol.
+- Shift scroll changes track.";;
+    4) cmus-remote --volume +3% ;;
+    5) cmus-remote --volume -3% ;;
+    7) cmus-remote --next ;;
+    8) cmus-remote --prev ;;
+    6) "$TERMINAL" -e "$EDITOR" "$0" ;;
+esac
+
+
+
+
+
+echo $output

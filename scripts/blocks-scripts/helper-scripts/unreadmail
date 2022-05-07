@@ -1,0 +1,10 @@
+#!/bin/sh
+
+
+account1="$(find "${XDG_DATA_HOME:-$HOME/.local/share}"/mail/unlikelytitan@posteo.net/INBOX/new/* -type f | wc -l 2>/dev/null)"
+account2="$(find "${XDG_DATA_HOME:-$HOME/.local/share}"/mail/alec.byu@cobbles.com/INBOX/new/* -type f | wc -l 2>/dev/null)"
+
+
+total=$(($account1 + $account2))
+
+echo $total

@@ -1,0 +1,7 @@
+#!/bin/sh
+
+cputemp=$(cat /sys/class/thermal/thermal_zone0/temp | sed 's/.\{3\}$//')
+
+
+echo " $cputemp°C"
+

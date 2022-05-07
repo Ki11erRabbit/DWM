@@ -1,0 +1,22 @@
+#!/bin/sh
+
+case $BLOCK_BUTTON in
+	1) amixer set Capture toggle > /dev/null; kill -47 $(pidof dwmblocks);;
+	3) notify-send "Mic Status" "shows if the mic is muted or being used
+Left Mouse to toggle mute";;
+	6) $TERMINAL -e nvim "$0" ;;
+
+esac
+
+
+if [[ $(pactl list short | grep RUNNING | awk '/input/ {print $2}' | wc -c) -ne 0 ]]; then
+
+	if pactl get-source-mute @DEFAULT_SOURCE@ | grep -q yes; then
+		echo "🎙️ muted"
+	else
+		echo "🎙️"
+	fi
+elif pactl get-source-mute @DEFAULT_SOURCE@ | grep -q yes; then
+		echo "🎙️ muted"
+
+fi

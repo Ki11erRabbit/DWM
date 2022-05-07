@@ -1,0 +1,6 @@
+#!/usr/bin/env sh
+
+NSXIV_OPTS=${NSXIV_OPTS:-"-a"}
+# set default args here   ^   ^  inside the quotes
+
+exec /usr/local/bin/nsxiv $NSXIV_OPTS "$@"

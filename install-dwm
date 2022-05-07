@@ -1,0 +1,7 @@
+#! /bin/sh
+
+# Make sure to run this script not as root as the script will ask for your password when it needs it
+
+cp -fv .dwm ~/
+cp -fv scripts ~/.local/bin/
+sudo make install

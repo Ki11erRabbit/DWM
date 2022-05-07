@@ -1,0 +1,10 @@
+#!/bin/sh
+
+
+open() {
+	handlr open $1
+}
+
+
+
+exec handlr open $1
