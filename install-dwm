@@ -4,12 +4,15 @@
 
 
 # installs DWM 
+echo "Installing DWM enter your password"
 sudo make install
 
 #moves scripts for dwm and dwmblocks
-cp -rfv .dwm ~/
-cp -rfv scripts/bin/ ~/.local/bin/
+echo "Moving scripts for dwmblocks and other scripts"
+cp -rf .dwm ~/
+cp -rf scripts/bin/ ~/.local/
 
 #installs dwmblocks-async
+echo "Installing dwmblocks-async"
 cd dwmblocks-async
 sudo make install
