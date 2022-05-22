@@ -45,6 +45,7 @@ install: all
 	chmod 644 ${DESTDIR}${MANPREFIX}/man1/dwm.1
 	rm -v config.h
 	cp -f startdwm ${DESTDIR}${PREFIX}/bin
+	./move-xsession
 
 
 uninstall:
