@@ -220,12 +220,13 @@ static Key keys[] = {
         { MODKEY|ControlMask,           XK_x,      togglescratch,  {.ui = 2 } },//keepassxc	
 	//******** System
 	//{ MODKEY|ControlMask,           XK_s,      spawn,          SHCMD("systemctl suspend") },//suspend
-        { MODKEY,                    XK_BackSpace, spawn,          SHCMD("betterlockscreen -l") },  //lock
+    { MODKEY,                    XK_BackSpace, spawn,          SHCMD("betterlockscreen -l") },  //lock
 	{ MODKEY|ControlMask,           XK_q,      spawn,          SHCMD("sysact") },         //logout
 	//******** Programs
 	{ MODKEY,                       XK_d,      spawn,          {.v = dmenucmd } },
 	{ MODKEY,	      		XK_Return, spawn,          {.v = termcmd } },
 	{ MODKEY,        		XK_r,      spawn,          SHCMD("thunar") },
+	{ MODKEY|ALTKEY,             XK_Return, spawn,          SHCMDZSH("emacs") },//{.v = termfm } },
 	//{ MODKEY|ShiftMask,             XK_Return, spawn,          SHCMDZSH("kitty nnn -a -c -P p") },//{.v = termfm } },
 	//{ MODKEY|ControlMask,           XK_Return, spawn,          SHCMDZSH("kitty nnn -a -e -P p") }, //{.v = termfmedit } },
 	{ MODKEY|ShiftMask,             XK_Return, spawn,          SHCMDZSH("alacritty -e nnn -a -c") },//{.v = termfm } },
@@ -233,9 +234,9 @@ static Key keys[] = {
 	{ MODKEY|ShiftMask|ControlMask, XK_Return, spawn,          SHCMDZSH("alacritty nnn -a -e") }, //{.v = termfmedit } },
 	//{ MODKEY,                       XK_w,      spawn,          SHCMDZSH("$BROWSER") },
 	//{ 0|ControlMask|ALTKEY,         XK_Delete, spawn,          SHCMD("kitty btop") }, 
-        //{ MODKEY|ShiftMask,             XK_m,      spawn,          SHCMDZSH("kitty -T cmus screen -q -r -D cmus || screen -S cmus $(which --skip-alias cmus)") },	
+    //{ MODKEY|ShiftMask,             XK_m,      spawn,          SHCMDZSH("kitty -T cmus screen -q -r -D cmus || screen -S cmus $(which --skip-alias cmus)") },
 	{ 0|ControlMask|ALTKEY,         XK_Delete, spawn,          SHCMD("alacritty -e btop") }, 
-        { MODKEY|ALTKEY,                XK_m,      spawn,          SHCMDZSH("alacritty -t cmus -e screen -q -r -D cmus || screen -S cmus $(which --skip-alias cmus)") },	
+    { MODKEY|ALTKEY,                XK_m,      spawn,          SHCMDZSH("alacritty -t cmus -e screen -q -r -D cmus || screen -S cmus $(which --skip-alias cmus)") },
 	{ 0,                            XK_Print,  spawn,	   SHCMD("spectacle --fullscreen --background") },
 	//{ MODKEY,                       XK_s,      spawn,          SHCMD("spectacle --region --background") },
 	//{ MODKEY|ShiftMask,             XK_s,      spawn,          SHCMD("spectacle --region --background --copy-image") },
@@ -244,10 +245,10 @@ static Key keys[] = {
 	{ MODKEY,                       XK_h,      spawn,          SHCMD("panther_launcher") },
 	{ MODKEY|ShiftMask,             XK_c,      spawn,          SHCMD("kill -s USR1 $(pidof deadd-notification-center)") },
 	{ MODKEY|ShiftMask,             XK_d,      spawn,          SHCMD("keepmenu") },//{.v = keepmenu } },
-        { MODKEY|ControlMask,           XK_v,      spawn,          SHCMD("copyq toggle") },//copyq	
-        //{ MODKEY|ControlMask,           XK_e,      spawn,          SHCMD("easyeffects") },//easyeffects	
-        { MODKEY|ALTKEY,                XK_h,      spawn,          SHCMD("groff -mom ~/.dwm/help/dwm-help.mom -Tpdf | zathura -") },//help menu	
-	//{ MODKEY,                       XK_p,      spawn,          SHCMD("cabl") },
+    { MODKEY|ControlMask,           XK_v,      spawn,          SHCMD("copyq toggle") },//copyq
+    //{ MODKEY|ControlMask,           XK_e,      spawn,          SHCMD("easyeffects") },//easyeffects
+    { MODKEY|ALTKEY,                XK_h,      spawn,          SHCMD("groff -mom ~/.dwm/help/dwm-help.mom -Tpdf | zathura -") },//help menu
+    //{ MODKEY,                       XK_p,      spawn,          SHCMD("cabl") },
 
 	
         { 0, XF86XK_AudioMicMute,               spawn,          SHCMD("amixer set Capture toggle; kill -47 $(pidof dwmblocks)") },	
