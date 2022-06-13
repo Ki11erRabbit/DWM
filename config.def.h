@@ -225,7 +225,7 @@ static Key keys[] = {
 	//******** Programs
 	{ MODKEY,                       XK_d,      spawn,          {.v = dmenucmd } },
 	{ MODKEY,	      		XK_Return, spawn,          {.v = termcmd } },
-	{ MODKEY,        		XK_r,      spawn,          SHCMD("thunar") },
+	//{ MODKEY,        		XK_r,      spawn,          SHCMD("thunar") },
 	{ MODKEY|ALTKEY,             XK_Return, spawn,          SHCMDZSH("emacs") },//{.v = termfm } },
 	//{ MODKEY|ShiftMask,             XK_Return, spawn,          SHCMDZSH("kitty nnn -a -c -P p") },//{.v = termfm } },
 	//{ MODKEY|ControlMask,           XK_Return, spawn,          SHCMDZSH("kitty nnn -a -e -P p") }, //{.v = termfmedit } },
