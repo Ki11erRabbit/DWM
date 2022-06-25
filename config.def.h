@@ -72,6 +72,10 @@ static const char *const autostart[] = {
 	NULL /* terminate */
 };
 
+/* swallow emacs */
+static const char emacsclient[] = "emacsclient";
+static const char emacsname[] = "emacs@";
+
 /* tagging */
 static const char *tags[] = { "1", "2", "3", "4", "5", "6", "7", "8", "9" };
 
