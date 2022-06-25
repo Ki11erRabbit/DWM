@@ -17,7 +17,9 @@ static const int smartgaps          = 0;        /* 1 means no outer gap when the
 static int showbar            = 1;        /* 0 means no bar */
 static int topbar             = 1;        /* 0 means bottom bar */
 static const char *fonts[]          = { "IBM Plex Mono:size=9","twemoji:pixelsize=9:antialias=true:autohint=true","Fira Code Medium:size=9", "fontawesome-regular:size=9","monospace:size=9","Font Awesome 6 Free Solid:size=9"/*"IBMPlexMono-Regular:pixelsize=9"*/ /*"JoyPixels*/};
+//static const char *fonts[]          = { "VCR OSD Mono:size=11","twemoji:pixelsize=11:antialias=true:autohint=true","Fira Code Medium:size=9", "fontawesome-regular:size=9","monospace:size=9","Font Awesome 6 Free Solid:size=9"/*"IBMPlexMono-Regular:pixelsize=9"*/ /*"JoyPixels*/};
 static const char dmenufont[]      = "IBM Plex Mono:size=9";
+//static const char dmenufont[]      = "VCR OSD Mono:size=11";
 /*static const char col_gray1[]       = "#222222";
 static const char col_gray2[]       = "#444444";
 static const char col_gray3[]       = "#bbbbbb";
@@ -226,7 +228,7 @@ static Key keys[] = {
 	{ MODKEY,                       XK_d,      spawn,          {.v = dmenucmd } },
 	{ MODKEY,	      		XK_Return, spawn,          {.v = termcmd } },
 	//{ MODKEY,        		XK_r,      spawn,          SHCMD("thunar") },
-	{ MODKEY|ALTKEY,             XK_Return, spawn,          SHCMDZSH("emacs") },//{.v = termfm } },
+	{ MODKEY|ALTKEY,             XK_Return, spawn,          SHCMDZSH("emacsclient -c -a \'emacs\'") },//{.v = termfm } },
 	//{ MODKEY|ShiftMask,             XK_Return, spawn,          SHCMDZSH("kitty nnn -a -c -P p") },//{.v = termfm } },
 	//{ MODKEY|ControlMask,           XK_Return, spawn,          SHCMDZSH("kitty nnn -a -e -P p") }, //{.v = termfmedit } },
 	{ MODKEY|ShiftMask,             XK_Return, spawn,          SHCMDZSH("alacritty -e nnn -a -c") },//{.v = termfm } },
@@ -248,6 +250,8 @@ static Key keys[] = {
     { MODKEY|ControlMask,           XK_v,      spawn,          SHCMD("copyq toggle") },//copyq
     //{ MODKEY|ControlMask,           XK_e,      spawn,          SHCMD("easyeffects") },//easyeffects
     { MODKEY|ALTKEY,                XK_h,      spawn,          SHCMD("groff -mom ~/.dwm/help/dwm-help.mom -Tpdf | zathura -") },//help menu
+    //{ MODKEY|ALTKEY,                XK_k,      spawn,          SHCMDZSH("unicomp") },//change keyboard layout
+
     //{ MODKEY,                       XK_p,      spawn,          SHCMD("cabl") },
 
 	
