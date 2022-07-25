@@ -3112,9 +3112,8 @@ termforwin(const Client *w)
 
 	for (m = mons; m; m = m->next) {
 		for (c = m->clients; c; c = c->next) {
-			if (c->isterminal && !c->swallowing && c->pid &&
-			    (isdescprocess(c->pid, w->pid) || 
-			     (containsemacsclient(c->pid) && (strstr(w->name,emacsname)))))
+			if (c->isterminal && !c->swallowing && c->pid ||
+			     (containsemacsclient(c->pid) && (strstr(w->name,emacsname))))
 				return c;
 		}
 	}
