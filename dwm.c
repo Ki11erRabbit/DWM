@@ -622,7 +622,7 @@ containsemacsclient(pid_t p)
     char pidname[256];
     fscanf(f, "%s", pidname);
     pclose(f);
-
+	//fprintf(stderr, "pid %u\npidname: %s %u\nemacsclient: %s\n", p, pidname, young, emacsclient);
     return strstr(pidname, emacsclient) != NULL;
 }  
 
@@ -635,6 +635,7 @@ getyoungestchild(pid_t p)
     if (!young)
         return 0;
     while ((tmp = getchildprocess(young))) {
+	//fprintf(stderr, "young: %u\n", tmp);
         young = tmp;
     }
     
@@ -3112,8 +3113,9 @@ termforwin(const Client *w)
 
 	for (m = mons; m; m = m->next) {
 		for (c = m->clients; c; c = c->next) {
-			if (c->isterminal && !c->swallowing && c->pid ||
-			     (containsemacsclient(c->pid) && (strstr(w->name,emacsname))))
+			if (c->isterminal && !c->swallowing && c->pid &&
+				(isdescprocess(c->pid, w->pid) ||
+			     (containsemacsclient(c->pid) && (strstr(w->name,emacsname)))))
 				return c;
 		}
 	}
